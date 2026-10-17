@@ -9,21 +9,11 @@ import {
   AUDIO_LANGUAGES,
   MINIMAX_AUDIO_PATH,
   emotionValues,
+  floatFlag,
   pronunciationRules,
+  selectVoiceIdInteractively,
   submitTask,
 } from '../../../lib/compshare/minimax-helpers.js'
-import {timedSelect} from '../../../lib/prompts.js'
-
-// oclif 内置数值 flag 仅支持整数, 这里定义浮点数解析
-const floatFlag = Flags.custom<number>({
-  parse: async (input) => {
-    const value = Number(input)
-    if (!Number.isFinite(value)) {
-      throw new TypeError(`无效的数值: ${input}。`)
-    }
-    return value
-  },
-})
 
 export default class MinimaxAudioCreate extends CompshareBaseCommand {
   static aliases = ['mm:audio:create', 'mm:audio:new', 'ma:create', 'ma:new', 'ma:tts']
@@ -88,7 +78,7 @@ export default class MinimaxAudioCreate extends CompshareBaseCommand {
         throw new UsageError('preset 或 custom 音色来源不能提供 --asset-id。')
       }
       // 未显式提供 --voice-id 时, 拉取同类型音色列表交互式单选
-      const voiceId = flags.voiceId ?? (await this.selectVoiceId(client, flags.voiceSource))
+      const voiceId = flags.voiceId ?? (await selectVoiceIdInteractively(client, flags.voiceSource))
       voice = {source: flags.voiceSource, voice_id: voiceId}
     }
     if (flags.saveVoice && (flags.voiceSource !== 'asset' || !flags.voiceName || !(flags.voiceName.trim().length > 0 && flags.voiceName.trim().length <= 64))) {
@@ -151,21 +141,4 @@ export default class MinimaxAudioCreate extends CompshareBaseCommand {
       ],
     )
   }
-
-  // #region 音色交互选择: 未提供 --voice-id 时的回退, 从 voices 接口拉取同类型音色单选
-  private async selectVoiceId(client: MiniMaxClient, kind: string): Promise<string> {
-    const response = await client.request('GET', '/audio/v1/voices', {query: {kind}})
-    const voiceItems = Array.isArray(response.items) ? (response.items as Array<Record<string, unknown>>) : []
-    if (voiceItems.length === 0) {
-      throw new UsageError(`没有可用的 ${kind} 音色, 请改用 --voice-id 显式指定。`)
-    }
-    return timedSelect({
-      message: `选择 ${kind} 音色:`,
-      choices: voiceItems.map((item) => ({
-        name: [item.voice_id, item.name, item.language].filter(Boolean).join(' | '),
-        value: String(item.voice_id),
-      })),
-    })
-  }
-  // #endregion
 }

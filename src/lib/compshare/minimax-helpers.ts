@@ -2,12 +2,26 @@
 
 import {statSync, readFileSync} from 'node:fs'
 
+import {Flags} from '@oclif/core'
+
+import {timedSelect} from '../prompts.js'
 import {confirmDetails} from './confirm.js'
 import type {CompshareContext} from './context.js'
 import {UsageError} from './errors.js'
 import {MiniMaxClient} from './minimax-api.js'
 
 // #region 常量与列定义
+// oclif 内置数值 flag 仅支持整数, 这里定义浮点数解析(音频语速等场景共用)
+export const floatFlag = Flags.custom<number>({
+  parse: async (input) => {
+    const value = Number(input)
+    if (!Number.isFinite(value)) {
+      throw new TypeError(`无效的数值: ${input}。`)
+    }
+    return value
+  },
+})
+
 export const MINIMAX_RESOLUTIONS = new Set(['2K', '4K', '480P', '768P', '1080P'])
 export const MINIMAX_MODELS = new Set(['MiniMax-H3', 'minimax-h3-lite'])
 export const MINIMAX_RATIOS = new Set(['1:1', '3:4', '4:3', '9:16', '16:9', '21:9', 'adaptive'])
@@ -136,6 +150,22 @@ export function videoContent(options: {
 // 任务资源路径(taskId 全量转义)
 export function taskPath(prefix: string, taskId: string): string {
   return `${prefix}/${encodeURIComponent(taskId)}`
+}
+
+// 未提供 --voice-id 时的回退: 拉取同类型音色列表交互式单选
+export async function selectVoiceIdInteractively(client: MiniMaxClient, kind: string): Promise<string> {
+  const response = await client.request('GET', '/audio/v1/voices', {query: {kind}})
+  const voiceItems = Array.isArray(response.items) ? (response.items as Array<Record<string, unknown>>) : []
+  if (voiceItems.length === 0) {
+    throw new UsageError(`没有可用的 ${kind} 音色, 请改用 --voice-id 显式指定。`)
+  }
+  return timedSelect({
+    message: `选择 ${kind} 音色:`,
+    choices: voiceItems.map((item) => ({
+      name: [item.voice_id, item.name, item.language].filter(Boolean).join(' | '),
+      value: String(item.voice_id),
+    })),
+  })
 }
 
 // 提交流程: dry-run 展示 → 确认 → POST → 展示任务 ID
