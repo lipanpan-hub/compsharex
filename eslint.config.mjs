@@ -13,6 +13,8 @@ export default [
   {
     // 关闭对本 CLI 项目审查无实际收益的纯风格/主观偏好规则
     rules: {
+      // 与云 API/外部协议字段名对齐的 snake_case 对象键必须保留
+      'camelcase': ['error', {properties: 'never'}],
       // 代码风格排版/注释格式：不影响正确性
       '@stylistic/lines-between-class-members': 'off',
       '@stylistic/padding-line-between-statements': 'off',
@@ -26,6 +28,8 @@ export default [
       'n/no-unsupported-features/node-builtins': 'off',
       // 串行调用云 API 是合理的，避免并发限流
       'no-await-in-loop': 'off',
+      // 权限位/标志位检测属位运算合理用途（如 doctor 的配置文件权限检查）
+      'no-bitwise': 'off',
       'object-shorthand': 'off',
       // 成员/导入/对象键/接口排序：纯主观，无功能意义
       'perfectionist/sort-classes': 'off',
