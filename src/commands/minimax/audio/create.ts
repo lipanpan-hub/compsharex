@@ -58,7 +58,8 @@ export default class MinimaxAudioCreate extends CompshareBaseCommand {
     const {args, flags} = await this.parse(MinimaxAudioCreate)
     const context = this.compshareContext()
     const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
-    if (args.text.length > 2000 || !/[^\W_]/u.test(args.text)) {
+    // \p{L}\p{N} 匹配任意 Unicode 字母或数字, 包含中文; 旧正则 [^\W_] 因 \w 不含中文而误拒中文文本
+    if (args.text.length > 2000 || !/[\p{L}\p{N}]/u.test(args.text)) {
       throw new UsageError('语音文本必须包含 1-2000 个字母或数字字符。')
     }
     if (!AUDIO_LANGUAGES.has(flags.language)) {
