@@ -16,6 +16,7 @@
     "@oclif/plugin-not-found": "^4.0.4",
     "@oclif/plugin-version": "^3.0.5",
     "@oclif/plugin-warn-if-update-available": "^4.0.3",
+    "@ucloud-sdks/ucloud-sdk-js": "^0.2.55",
     "fuse.js": "^7.5.0",
     "pino": "^10.4.0",
     "pino-mongodb": "^5.0.0",
