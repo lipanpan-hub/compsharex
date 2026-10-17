@@ -20,7 +20,7 @@ $ npm install -g @lppx/compsharex
 $ cps COMMAND
 running command...
 $ cps (--version)
-@lppx/compsharex/0.0.0 win32-x64 node-v24.14.1
+@lppx/compsharex/0.0.0 linux-x64 node-v22.23.3
 $ cps --help [COMMAND]
 USAGE
   $ cps COMMAND
@@ -29,61 +29,40 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`cps hello PERSON`](#cps-hello-person)
-* [`cps hello world`](#cps-hello-world)
+* [`cps autocomplete [SHELL]`](#cps-autocomplete-shell)
 * [`cps help [COMMAND]`](#cps-help-command)
-* [`cps plugins`](#cps-plugins)
-* [`cps plugins add PLUGIN`](#cps-plugins-add-plugin)
-* [`cps plugins:inspect PLUGIN...`](#cps-pluginsinspect-plugin)
-* [`cps plugins install PLUGIN`](#cps-plugins-install-plugin)
-* [`cps plugins link PATH`](#cps-plugins-link-path)
-* [`cps plugins remove [PLUGIN]`](#cps-plugins-remove-plugin)
-* [`cps plugins reset`](#cps-plugins-reset)
-* [`cps plugins uninstall [PLUGIN]`](#cps-plugins-uninstall-plugin)
-* [`cps plugins unlink [PLUGIN]`](#cps-plugins-unlink-plugin)
-* [`cps plugins update`](#cps-plugins-update)
+* [`cps version`](#cps-version)
 
-## `cps hello PERSON`
+## `cps autocomplete [SHELL]`
 
-Say hello
+Display autocomplete installation instructions.
 
 ```
 USAGE
-  $ cps hello PERSON -f <value>
+  $ cps autocomplete [SHELL] [-r]
 
 ARGUMENTS
-  PERSON  Person to say hello to
+  [SHELL]  (zsh|bash|powershell) Shell type
 
 FLAGS
-  -f, --from=<value>  (required) Who is saying hello
+  -r, --refresh-cache  Refresh cache (ignores displaying instructions)
 
 DESCRIPTION
-  Say hello
+  Display autocomplete installation instructions.
 
 EXAMPLES
-  $ cps hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
+  $ cps autocomplete
+
+  $ cps autocomplete bash
+
+  $ cps autocomplete zsh
+
+  $ cps autocomplete powershell
+
+  $ cps autocomplete --refresh-cache
 ```
 
-_See code: [src/commands/hello/index.ts](https://github.com/lipanpan-hub/compsharex/blob/v0.0.0/src/commands/hello/index.ts)_
-
-## `cps hello world`
-
-Say hello world
-
-```
-USAGE
-  $ cps hello world
-
-DESCRIPTION
-  Say hello world
-
-EXAMPLES
-  $ cps hello world
-  hello world! (./src/commands/hello/world.ts)
-```
-
-_See code: [src/commands/hello/world.ts](https://github.com/lipanpan-hub/compsharex/blob/v0.0.0/src/commands/hello/world.ts)_
+_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v4.0.4/src/commands/autocomplete/index.ts)_
 
 ## `cps help [COMMAND]`
 
@@ -105,293 +84,23 @@ DESCRIPTION
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/6.3.0/src/commands/help.ts)_
 
-## `cps plugins`
-
-List installed plugins.
+## `cps version`
 
 ```
 USAGE
-  $ cps plugins [--json] [--core]
+  $ cps version [--json] [--verbose]
 
 FLAGS
-  --core  Show core plugins.
+  --verbose  Show additional information about the CLI.
 
 GLOBAL FLAGS
   --json  Format output as json.
 
-DESCRIPTION
-  List installed plugins.
+FLAG DESCRIPTIONS
+  --verbose  Show additional information about the CLI.
 
-EXAMPLES
-  $ cps plugins
+    Additionally shows the architecture, node version, operating system, and versions of plugins that the CLI is using.
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/5.5.2/src/commands/plugins/index.ts)_
-
-## `cps plugins add PLUGIN`
-
-Installs a plugin into cps.
-
-```
-USAGE
-  $ cps plugins add PLUGIN... [--json] [-f] [-h] [-s | -v]
-
-ARGUMENTS
-  PLUGIN...  Plugin to install.
-
-FLAGS
-  -f, --force    Force npm to fetch remote resources even if a local copy exists on disk.
-  -h, --help     Show CLI help.
-  -s, --silent   Silences npm output.
-  -v, --verbose  Show verbose npm output.
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Installs a plugin into cps.
-
-  Uses npm to install plugins.
-
-  Installation of a user-installed plugin will override a core plugin.
-
-  Use the CPS_NPM_LOG_LEVEL environment variable to set the npm loglevel.
-  Use the CPS_NPM_REGISTRY environment variable to set the npm registry.
-
-ALIASES
-  $ cps plugins add
-
-EXAMPLES
-  Install a plugin from npm registry.
-
-    $ cps plugins add myplugin
-
-  Install a plugin from a github url.
-
-    $ cps plugins add https://github.com/someuser/someplugin
-
-  Install a plugin from a github slug.
-
-    $ cps plugins add someuser/someplugin
-```
-
-## `cps plugins:inspect PLUGIN...`
-
-Displays installation properties of a plugin.
-
-```
-USAGE
-  $ cps plugins inspect PLUGIN...
-
-ARGUMENTS
-  PLUGIN...  [default: .] Plugin to inspect.
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Displays installation properties of a plugin.
-
-EXAMPLES
-  $ cps plugins inspect myplugin
-```
-
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/5.5.2/src/commands/plugins/inspect.ts)_
-
-## `cps plugins install PLUGIN`
-
-Installs a plugin into cps.
-
-```
-USAGE
-  $ cps plugins install PLUGIN... [--json] [-f] [-h] [-s | -v]
-
-ARGUMENTS
-  PLUGIN...  Plugin to install.
-
-FLAGS
-  -f, --force    Force npm to fetch remote resources even if a local copy exists on disk.
-  -h, --help     Show CLI help.
-  -s, --silent   Silences npm output.
-  -v, --verbose  Show verbose npm output.
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Installs a plugin into cps.
-
-  Uses npm to install plugins.
-
-  Installation of a user-installed plugin will override a core plugin.
-
-  Use the CPS_NPM_LOG_LEVEL environment variable to set the npm loglevel.
-  Use the CPS_NPM_REGISTRY environment variable to set the npm registry.
-
-ALIASES
-  $ cps plugins add
-
-EXAMPLES
-  Install a plugin from npm registry.
-
-    $ cps plugins install myplugin
-
-  Install a plugin from a github url.
-
-    $ cps plugins install https://github.com/someuser/someplugin
-
-  Install a plugin from a github slug.
-
-    $ cps plugins install someuser/someplugin
-```
-
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/5.5.2/src/commands/plugins/install.ts)_
-
-## `cps plugins link PATH`
-
-Links a plugin into the CLI for development.
-
-```
-USAGE
-  $ cps plugins link PATH [-h] [--install] [-v]
-
-ARGUMENTS
-  PATH  [default: .] path to plugin
-
-FLAGS
-  -h, --help          Show CLI help.
-  -v, --verbose
-      --[no-]install  Install dependencies after linking the plugin.
-
-DESCRIPTION
-  Links a plugin into the CLI for development.
-
-  Installation of a linked plugin will override a user-installed or core plugin.
-
-  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello'
-  command will override the user-installed or core plugin implementation. This is useful for development work.
-
-
-EXAMPLES
-  $ cps plugins link myplugin
-```
-
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/5.5.2/src/commands/plugins/link.ts)_
-
-## `cps plugins remove [PLUGIN]`
-
-Removes a plugin from the CLI.
-
-```
-USAGE
-  $ cps plugins remove [PLUGIN...] [-h] [-v]
-
-ARGUMENTS
-  [PLUGIN...]  plugin to uninstall
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Removes a plugin from the CLI.
-
-ALIASES
-  $ cps plugins unlink
-  $ cps plugins remove
-
-EXAMPLES
-  $ cps plugins remove myplugin
-```
-
-## `cps plugins reset`
-
-Remove all user-installed and linked plugins.
-
-```
-USAGE
-  $ cps plugins reset [--hard] [--reinstall]
-
-FLAGS
-  --hard       Delete node_modules and package manager related files in addition to uninstalling plugins.
-  --reinstall  Reinstall all plugins after uninstalling.
-```
-
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/5.5.2/src/commands/plugins/reset.ts)_
-
-## `cps plugins uninstall [PLUGIN]`
-
-Removes a plugin from the CLI.
-
-```
-USAGE
-  $ cps plugins uninstall [PLUGIN...] [-h] [-v]
-
-ARGUMENTS
-  [PLUGIN...]  plugin to uninstall
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Removes a plugin from the CLI.
-
-ALIASES
-  $ cps plugins unlink
-  $ cps plugins remove
-
-EXAMPLES
-  $ cps plugins uninstall myplugin
-```
-
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/5.5.2/src/commands/plugins/uninstall.ts)_
-
-## `cps plugins unlink [PLUGIN]`
-
-Removes a plugin from the CLI.
-
-```
-USAGE
-  $ cps plugins unlink [PLUGIN...] [-h] [-v]
-
-ARGUMENTS
-  [PLUGIN...]  plugin to uninstall
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Removes a plugin from the CLI.
-
-ALIASES
-  $ cps plugins unlink
-  $ cps plugins remove
-
-EXAMPLES
-  $ cps plugins unlink myplugin
-```
-
-## `cps plugins update`
-
-Update installed plugins.
-
-```
-USAGE
-  $ cps plugins update [-h] [-v]
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Update installed plugins.
-```
-
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/5.5.2/src/commands/plugins/update.ts)_
+_See code: [@oclif/plugin-version](https://github.com/oclif/plugin-version/blob/3.0.5/src/commands/version.ts)_
 <!-- commandsstop -->
