@@ -28,3 +28,6 @@ pnpm-lock.yaml
 # Tailwind 生成的 CSS 文件
 public/css/style.css
 compshare-cli
+
+# 本地测试脚本目录
+/testmp
