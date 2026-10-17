@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class ImageFavorite extends CompshareBaseCommand {
+  static aliases = ['img:favorite']
   static description = '收藏社区镜像组'
 
   static examples = ['<%= config.bin %> <%= command.id %> <GROUP_ID>']

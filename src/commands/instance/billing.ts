@@ -8,6 +8,7 @@ import {CompshareContext} from '../../lib/compshare/context.js'
 import {compact, memoryMib} from '../../lib/compshare/parsing.js'
 
 export default class InstanceBilling extends CompshareBaseCommand {
+  static aliases = ['ins:billing']
   static description = '查询当前实例价格'
   static examples = ['<%= config.bin %> <%= command.id %> --gpu 4090 --cpu 16 --memory 64GiB --region cn-bj2 --zone cn-bj2-a']
 

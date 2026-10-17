@@ -8,6 +8,7 @@ import {compact, splitCsv} from '../../../lib/compshare/parsing.js'
 import {billingParams} from '../../../lib/compshare/team-helpers.js'
 
 export default class BillingProducts extends CompshareBaseCommand {
+  static aliases = ['tm:billing:products']
   static description = '列出团队成员使用的商品类型'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> <MEMBER_ID>']

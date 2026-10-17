@@ -42,6 +42,7 @@ const ALLOWED_FILTERS: Record<string, ReadonlySet<string>> = {
 }
 
 export default class ImageList extends CompshareBaseCommand {
+  static aliases = ['img:list', 'img:ls']
   static description = '列出平台/自定义/社区/共享/已发布镜像'
 
   static examples = ['<%= config.bin %> <%= command.id %> --source community']

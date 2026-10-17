@@ -26,6 +26,7 @@ import {compact, memoryMib, money} from '../../lib/compshare/parsing.js'
 // (计划中的 instance-template 任务将补回 --template)
 
 export default class InstanceCreate extends CompshareBaseCommand {
+  static aliases = ['ins:create', 'ins:new']
   static description = '创建实例: 支持交互式向导或显式参数自动化'
   static examples = [
     '<%= config.bin %> <%= command.id %> --gpu 4090 --count 1 --cpu 16 --memory 64GiB --image <IMAGE_ID> --region cn-bj2 --zone cn-bj2-a --yes',

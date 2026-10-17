@@ -11,6 +11,7 @@ import {locateDisk, locateInstance} from '../../../lib/compshare/location.js'
 import {compact, diskGib} from '../../../lib/compshare/parsing.js'
 
 export default class DiskResize extends CompshareBaseCommand {
+  static aliases = ['st:disk:resize']
   static description = '扩容磁盘'
 
   static examples = ['<%= config.bin %> <%= command.id %> <DISK_ID> --size 200GiB']

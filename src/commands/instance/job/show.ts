@@ -7,6 +7,7 @@ import {validateJobId, showScript} from '../../../lib/compshare/remote-jobs.js'
 import {remoteJobRecords, singleJobRecord} from '../../../lib/compshare/ssh-remote.js'
 
 export default class JobShow extends CompshareBaseCommand {
+  static aliases = ['ins:job:show', 'ins:job:get']
   static description = '查看持久远程作业状态与元数据'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> <JOB_ID>']
 

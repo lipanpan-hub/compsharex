@@ -7,6 +7,7 @@ import {locateInstance} from '../../../lib/compshare/location.js'
 import {schedulerStopTimeOf, schedulePayload} from '../../../lib/compshare/instance-helpers.js'
 
 export default class InstanceScheduleShow extends CompshareBaseCommand {
+  static aliases = ['ins:schedule:show', 'ins:schedule:get']
   static description = '查看实例定时关机'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>']
 

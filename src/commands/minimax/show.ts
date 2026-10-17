@@ -7,6 +7,7 @@ import {MiniMaxClient} from '../../lib/compshare/minimax-api.js'
 import {taskPath} from '../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxShow extends CompshareBaseCommand {
+  static aliases = ['mm:show', 'mm:get']
   static description = '查看 MiniMax H3 视频任务'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TASK_ID>']

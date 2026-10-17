@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../../lib/compshare
 import {CompshareContext} from '../../../lib/compshare/context.js'
 
 export default class InstanceSoftwareList extends CompshareBaseCommand {
+  static aliases = ['ins:software:list', 'ins:software:ls']
   static description = '列出实例支持的软件'
   static examples = ['<%= config.bin %> <%= command.id %>']
 

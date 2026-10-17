@@ -33,6 +33,7 @@ function osName(): string {
 }
 
 export default class Feedback extends CompshareBaseCommand {
+  static aliases = ['fb']
   static description = '提交 CLI 使用反馈'
   static examples = ['<%= config.bin %> <%= command.id %> bug 连接实例时超时的复现步骤...']
 

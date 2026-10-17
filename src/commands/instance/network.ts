@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class InstanceNetwork extends CompshareBaseCommand {
+  static aliases = ['ins:network']
   static description = '检查网络加速器状态'
   static examples = ['<%= config.bin %> <%= command.id %>']
 

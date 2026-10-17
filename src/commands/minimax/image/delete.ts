@@ -7,6 +7,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {MINIMAX_IMAGE_PATH, mediaAction} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxImageDelete extends CompshareBaseCommand {
+  static aliases = ['mm:image:delete', 'mm:image:rm']
   static description = '删除已完成的图像任务及其输出'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TASK_ID>']

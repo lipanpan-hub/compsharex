@@ -4,6 +4,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../../lib/compshare
 import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 
 export default class MinimaxImageConfig extends CompshareBaseCommand {
+  static aliases = ['mm:image:config']
   static description = '查看图像生成可用性与价格'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

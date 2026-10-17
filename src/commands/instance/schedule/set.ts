@@ -11,6 +11,7 @@ import {timestamp} from '../../../lib/compshare/parsing.js'
 import {UsageError} from '../../../lib/compshare/errors.js'
 
 export default class InstanceScheduleSet extends CompshareBaseCommand {
+  static aliases = ['ins:schedule:set']
   static description = '设置实例定时关机'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --at 2h']
 

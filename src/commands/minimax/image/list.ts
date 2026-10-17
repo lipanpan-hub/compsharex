@@ -8,6 +8,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {MEDIA_TASK_COLUMNS, MINIMAX_IMAGE_PATH} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxImageList extends CompshareBaseCommand {
+  static aliases = ['mm:image:list', 'mm:image:ls']
   static description = '列出图像任务'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

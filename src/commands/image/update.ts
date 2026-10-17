@@ -9,6 +9,7 @@ import {UsageError} from '../../lib/compshare/errors.js'
 import {compact, readBase64, readText, splitCsv} from '../../lib/compshare/parsing.js'
 
 export default class ImageUpdate extends CompshareBaseCommand {
+  static aliases = ['img:update']
   static description = '更新镜像元数据'
 
   static examples = ['<%= config.bin %> <%= command.id %> <IMAGE_ID> --region cn-sh2 --name new-name']

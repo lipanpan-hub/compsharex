@@ -7,6 +7,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {MINIMAX_SKILL_PATH, SKILL_COLUMNS} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxSkillList extends CompshareBaseCommand {
+  static aliases = ['mm:skill:list', 'mm:skill:ls']
   static description = '列出官方与自定义视频技能'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

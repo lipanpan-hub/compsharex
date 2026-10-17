@@ -4,6 +4,7 @@ import {CompshareBaseCommand} from '../../../lib/compshare/base.js'
 import {templatePath} from '../../../lib/compshare/instance-template-store.js'
 
 export default class InstanceTemplatePath extends CompshareBaseCommand {
+  static aliases = ['ins:template:path']
   static description = '打印本地实例模板文件路径'
   static examples = ['<%= config.bin %> <%= command.id %>']
 

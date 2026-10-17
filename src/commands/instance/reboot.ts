@@ -6,6 +6,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {batchLifecycle} from '../../lib/compshare/instance-helpers.js'
 
 export default class InstanceReboot extends CompshareBaseCommand {
+  static aliases = ['ins:reboot']
   static description = '重启一台或多台实例'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>...']
 

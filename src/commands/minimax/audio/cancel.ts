@@ -7,6 +7,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {MINIMAX_AUDIO_PATH, mediaAction} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxAudioCancel extends CompshareBaseCommand {
+  static aliases = ['mm:audio:cancel']
   static description = '取消排队中的语音任务'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TASK_ID>']

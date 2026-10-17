@@ -6,6 +6,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../../lib/compshare
 import {relation} from '../../../lib/compshare/team-helpers.js'
 
 export default class InviteCancel extends CompshareBaseCommand {
+  static aliases = ['tm:invite:cancel']
   static description = '取消待处理的团队邀请'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> <USER_ID>']

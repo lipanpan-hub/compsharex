@@ -8,6 +8,7 @@ import {cancelScript, validateJobId} from '../../../lib/compshare/remote-jobs.js
 import {remoteJobRecords, singleJobRecord} from '../../../lib/compshare/ssh-remote.js'
 
 export default class JobCancel extends CompshareBaseCommand {
+  static aliases = ['ins:job:cancel']
   static description = '取消运行中的持久远程作业'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> <JOB_ID> --force']
 

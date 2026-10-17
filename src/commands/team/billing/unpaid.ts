@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../../lib/compshare
 import {ORDER_COLUMNS, billingParams} from '../../../lib/compshare/team-helpers.js'
 
 export default class BillingUnpaid extends CompshareBaseCommand {
+  static aliases = ['tm:billing:unpaid']
   static description = '列出并汇总团队成员未支付订单'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> <MEMBER_ID>']

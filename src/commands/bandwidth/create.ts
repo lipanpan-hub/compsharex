@@ -9,6 +9,7 @@ import {confirmDetails} from '../../lib/compshare/confirm.js'
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class BandwidthCreate extends CompshareBaseCommand {
+  static aliases = ['bw:create', 'bw:new']
   static description = '报价并购买独立带宽'
 
   static examples = ['<%= config.bin %> <%= command.id %> --region cn-bj2 --zone cn-bj2-02 --bandwidth 100']

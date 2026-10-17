@@ -7,6 +7,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {MINIMAX_IMAGE_PATH, mediaAction} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxImageCancel extends CompshareBaseCommand {
+  static aliases = ['mm:image:cancel']
   static description = '取消排队中的图像任务'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TASK_ID>']

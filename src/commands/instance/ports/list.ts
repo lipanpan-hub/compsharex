@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../../lib/compshare
 import {CompshareContext} from '../../../lib/compshare/context.js'
 
 export default class InstancePortsList extends CompshareBaseCommand {
+  static aliases = ['ins:ports:list', 'ins:ports:ls']
   static description = '列出支持的软件端口'
   static examples = ['<%= config.bin %> <%= command.id %>']
 

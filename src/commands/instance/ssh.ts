@@ -21,6 +21,7 @@ import {
 import {locateSshInstance} from '../../lib/compshare/ssh-remote.js'
 
 export default class InstanceSsh extends CompshareBaseCommand {
+  static aliases = ['ins:ssh']
   static description = '打开或打印实例 SSH 连接命令'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> -- ls -la']
 

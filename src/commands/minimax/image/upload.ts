@@ -9,6 +9,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {IMAGE_MIME, uploadAsset} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxImageUpload extends CompshareBaseCommand {
+  static aliases = ['mm:image:upload']
   static description = '上传并注册引用图片'
 
   static examples = ['<%= config.bin %> <%= command.id %> ref.png --width 1024 --height 768']

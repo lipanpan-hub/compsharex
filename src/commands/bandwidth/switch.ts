@@ -19,6 +19,7 @@ const SWITCH_COLUMNS = [
 ] as const satisfies readonly (readonly [string, string])[]
 
 export default class BandwidthSwitch extends CompshareBaseCommand {
+  static aliases = ['bw:switch', 'bw:sw']
   static description = '在独立带宽与共享带宽之间切换实例 EIP'
 
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>... --to shared']

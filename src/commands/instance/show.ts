@@ -18,6 +18,7 @@ const SECTION_FLAGS: Array<[string, 'ip' | 'softwares' | 'spec' | 'disks' | 'bil
 ]
 
 export default class InstanceShow extends CompshareBaseCommand {
+  static aliases = ['ins:show', 'ins:get']
   static description = '查看实例完整详情'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>']
 

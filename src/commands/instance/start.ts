@@ -7,6 +7,7 @@ import {batchLifecycle} from '../../lib/compshare/instance-helpers.js'
 import {compact} from '../../lib/compshare/parsing.js'
 
 export default class InstanceStart extends CompshareBaseCommand {
+  static aliases = ['ins:start']
   static description = '启动一台或多台实例'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>...']
 

@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class InstanceZones extends CompshareBaseCommand {
+  static aliases = ['ins:zones']
   static description = '列出支持的地域与可用区'
   static examples = ['<%= config.bin %> <%= command.id %>']
 

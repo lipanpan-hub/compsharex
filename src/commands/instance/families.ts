@@ -5,6 +5,7 @@ import {CompshareContext} from '../../lib/compshare/context.js'
 import {invoke} from '../../lib/compshare/api.js'
 
 export default class InstanceFamilies extends CompshareBaseCommand {
+  static aliases = ['ins:families']
   static description = '列出 GPU 机型家族'
   static examples = ['<%= config.bin %> <%= command.id %>']
 

@@ -7,6 +7,7 @@ import {UsageError} from '../../../lib/compshare/errors.js'
 import {quota} from '../../../lib/compshare/team-helpers.js'
 
 export default class QuotaGrant extends CompshareBaseCommand {
+  static aliases = ['tm:quota:grant']
   static description = '给团队成员拨发配额'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> <MEMBER_ID>... --amount 100']

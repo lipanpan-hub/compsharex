@@ -15,6 +15,7 @@ const INVITE_COLUMNS = [
 ] as const satisfies readonly (readonly [string, string])[]
 
 export default class InviteList extends CompshareBaseCommand {
+  static aliases = ['tm:invite:list', 'tm:invite:ls']
   static description = '列出当前账号收到的团队邀请'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

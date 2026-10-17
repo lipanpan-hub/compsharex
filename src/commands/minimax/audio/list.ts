@@ -7,6 +7,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {MEDIA_TASK_COLUMNS, MINIMAX_AUDIO_PATH} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxAudioList extends CompshareBaseCommand {
+  static aliases = ['mm:audio:list', 'mm:audio:ls']
   static description = '列出语音任务'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

@@ -21,6 +21,7 @@ async function promptSecret(): Promise<string> {
 }
 
 export default class InstancePassword extends CompshareBaseCommand {
+  static aliases = ['ins:password']
   static description = '重置实例密码'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --password <SECRET>']
 

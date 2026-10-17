@@ -10,6 +10,7 @@ import {UsageError} from '../../../lib/compshare/errors.js'
 import {locateDisk} from '../../../lib/compshare/location.js'
 
 export default class DiskDelete extends CompshareBaseCommand {
+  static aliases = ['st:disk:delete', 'st:disk:rm']
   static description = '永久删除磁盘'
 
   static examples = ['<%= config.bin %> <%= command.id %> <DISK_ID>']

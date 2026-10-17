@@ -9,6 +9,7 @@ import {locateInstance} from '../../../lib/compshare/location.js'
 import {compact, diskGib} from '../../../lib/compshare/parsing.js'
 
 export default class DiskPrice extends CompshareBaseCommand {
+  static aliases = ['st:disk:price']
   static description = '查询磁盘扩容价格'
 
   static examples = ['<%= config.bin %> <%= command.id %> <DISK_ID> --instance <INSTANCE_ID> --size 200GiB']

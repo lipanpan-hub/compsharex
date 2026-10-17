@@ -6,6 +6,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../../lib/compshare
 import {relation} from '../../../lib/compshare/team-helpers.js'
 
 export default class InviteReject extends CompshareBaseCommand {
+  static aliases = ['tm:invite:reject']
   static description = '拒绝团队邀请'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID>']

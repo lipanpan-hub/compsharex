@@ -9,6 +9,7 @@ import {confirm} from '../../lib/compshare/confirm.js'
 import {compact, readBase64, readText, splitCsv} from '../../lib/compshare/parsing.js'
 
 export default class ImagePublish extends CompshareBaseCommand {
+  static aliases = ['img:publish']
   static description = '发布镜像到社区'
 
   static examples = ['<%= config.bin %> <%= command.id %> <IMAGE_ID> --version v1 --region cn-sh2 --zone cn-sh2-03']

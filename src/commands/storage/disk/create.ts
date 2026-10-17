@@ -10,6 +10,7 @@ import {locateInstance} from '../../../lib/compshare/location.js'
 import {compact, diskGib} from '../../../lib/compshare/parsing.js'
 
 export default class DiskCreate extends CompshareBaseCommand {
+  static aliases = ['st:disk:create', 'st:disk:new']
   static description = '创建磁盘并挂载到实例'
 
   static examples = ['<%= config.bin %> <%= command.id %> --instance <INSTANCE_ID> --size 100GiB --name data01']

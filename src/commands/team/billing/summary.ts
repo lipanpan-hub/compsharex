@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../../lib/compshare
 import {billingParams} from '../../../lib/compshare/team-helpers.js'
 
 export default class BillingSummary extends CompshareBaseCommand {
+  static aliases = ['tm:billing:summary']
   static description = '查看团队成员订单汇总'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> <MEMBER_ID> --start 30d']

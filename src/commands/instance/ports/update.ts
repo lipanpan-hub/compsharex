@@ -11,6 +11,7 @@ import {compact} from '../../../lib/compshare/parsing.js'
 import {UsageError} from '../../../lib/compshare/errors.js'
 
 export default class InstancePortsUpdate extends CompshareBaseCommand {
+  static aliases = ['ins:ports:update']
   static description = '替换实例的容器端口映射'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --http 8888 --tcp 22 --tcp 23']
 

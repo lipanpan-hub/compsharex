@@ -7,6 +7,7 @@ import {newJobId, joinedCommand, submitScript, validateJobId} from '../../../lib
 import {remoteJobRecords, singleJobRecord} from '../../../lib/compshare/ssh-remote.js'
 
 export default class JobSubmit extends CompshareBaseCommand {
+  static aliases = ['ins:job:submit']
   static description = '提交可在断开终端后继续运行的持久远程作业并立即返回'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> -- python train.py --epochs 10']
 

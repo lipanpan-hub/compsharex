@@ -6,6 +6,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {batchLifecycle} from '../../lib/compshare/instance-helpers.js'
 
 export default class InstanceDelete extends CompshareBaseCommand {
+  static aliases = ['ins:delete', 'ins:rm']
   static description = '永久删除一台或多台实例'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>...']
 

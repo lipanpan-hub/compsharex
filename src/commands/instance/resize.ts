@@ -11,6 +11,7 @@ import {locateInstance} from '../../lib/compshare/location.js'
 import {compact, diskGib, memoryMib} from '../../lib/compshare/parsing.js'
 
 export default class InstanceResize extends CompshareBaseCommand {
+  static aliases = ['ins:resize']
   static description = '变更实例 CPU、内存、GPU 或磁盘大小'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --cpu 16 --memory 64GiB --gpu 1']
 

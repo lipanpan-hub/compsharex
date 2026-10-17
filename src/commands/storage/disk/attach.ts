@@ -9,6 +9,7 @@ import {locateInstance} from '../../../lib/compshare/location.js'
 import {compact} from '../../../lib/compshare/parsing.js'
 
 export default class DiskAttach extends CompshareBaseCommand {
+  static aliases = ['st:disk:attach']
   static description = '将已有磁盘挂载到实例'
 
   static examples = ['<%= config.bin %> <%= command.id %> <DISK_ID> --instance <INSTANCE_ID>']

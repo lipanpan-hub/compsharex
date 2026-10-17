@@ -9,6 +9,7 @@ import {CompshareContext} from '../../../lib/compshare/context.js'
 import {locateInstance} from '../../../lib/compshare/location.js'
 
 export default class DiskDetach extends CompshareBaseCommand {
+  static aliases = ['st:disk:detach']
   static description = '从实例卸载磁盘'
 
   static examples = ['<%= config.bin %> <%= command.id %> <DISK_ID> --instance <INSTANCE_ID> --device /dev/vdb']

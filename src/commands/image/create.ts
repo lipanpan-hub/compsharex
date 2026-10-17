@@ -15,6 +15,7 @@ import {compact} from '../../lib/compshare/parsing.js'
 const PROGRESS_INTERVAL_SECONDS = 5
 
 export default class ImageCreate extends CompshareBaseCommand {
+  static aliases = ['img:create', 'img:new']
   static description = '从实例创建自定义镜像'
 
   static examples = ['<%= config.bin %> <%= command.id %> --instance <ID> --name my-image']

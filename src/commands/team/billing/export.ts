@@ -11,6 +11,7 @@ import {compact, splitCsv} from '../../../lib/compshare/parsing.js'
 import {teamParams, timeParams} from '../../../lib/compshare/team-helpers.js'
 
 export default class BillingExport extends CompshareBaseCommand {
+  static aliases = ['tm:billing:export']
   static description = '导出团队订单为 CSV 文件'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> --output orders.csv']

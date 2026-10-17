@@ -4,6 +4,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../../lib/compshare
 import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 
 export default class MinimaxAudioPricing extends CompshareBaseCommand {
+  static aliases = ['mm:audio:pricing']
   static description = '查看语音定价与积分余额'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

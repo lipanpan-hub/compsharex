@@ -8,6 +8,7 @@ import {CompshareContext} from '../../lib/compshare/context.js'
 import {confirm} from '../../lib/compshare/confirm.js'
 
 export default class ImageUnshare extends CompshareBaseCommand {
+  static aliases = ['img:unshare']
   static description = '取消镜像对指定账号的共享'
 
   static examples = ['<%= config.bin %> <%= command.id %> <IMAGE_ID> <ACCOUNT_ID>... --region cn-sh2 --yes']

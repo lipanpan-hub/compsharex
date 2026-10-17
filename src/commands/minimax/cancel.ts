@@ -8,6 +8,7 @@ import {MiniMaxClient} from '../../lib/compshare/minimax-api.js'
 import {taskPath} from '../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxCancel extends CompshareBaseCommand {
+  static aliases = ['mm:cancel']
   static description = '取消未完成的 MiniMax H3 视频任务'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TASK_ID>']

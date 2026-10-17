@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class ImageShares extends CompshareBaseCommand {
+  static aliases = ['img:shares']
   static description = '列出镜像共享给的账号'
 
   static examples = ['<%= config.bin %> <%= command.id %> <IMAGE_ID> --region cn-sh2']

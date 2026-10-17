@@ -7,6 +7,7 @@ import {CompshareBaseCommand} from '../../lib/compshare/base.js'
 import {locateInstance} from '../../lib/compshare/location.js'
 
 export default class InstanceRefund extends CompshareBaseCommand {
+  static aliases = ['ins:refund']
   static description = '查询实例退款金额'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>...']
 

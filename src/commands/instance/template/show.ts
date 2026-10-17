@@ -6,6 +6,7 @@ import {CompshareBaseCommand} from '../../../lib/compshare/base.js'
 import {InstanceTemplateStore, templatePath} from '../../../lib/compshare/instance-template-store.js'
 
 export default class InstanceTemplateShow extends CompshareBaseCommand {
+  static aliases = ['ins:template:show', 'ins:template:get']
   static description = '查看本地实例模板'
   static examples = ['<%= config.bin %> <%= command.id %> <NAME>']
 

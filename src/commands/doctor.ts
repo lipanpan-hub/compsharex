@@ -40,6 +40,7 @@ function whichSync(executable: string): string | null {
 }
 
 export default class Doctor extends CompshareBaseCommand {
+  static aliases = ['doc']
   static description = '运行安装、凭证、API 与 OpenSSH 只读诊断'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

@@ -10,6 +10,7 @@ import {locateInstance} from '../../../lib/compshare/location.js'
 import {projectId as resolveProjectId} from '../../../lib/compshare/instance-helpers.js'
 
 export default class InstanceScheduleCancel extends CompshareBaseCommand {
+  static aliases = ['ins:schedule:cancel']
   static description = '取消实例定时关机'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>']
 

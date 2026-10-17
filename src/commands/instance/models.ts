@@ -8,6 +8,7 @@ import {CompshareContext} from '../../lib/compshare/context.js'
 import {compact} from '../../lib/compshare/parsing.js'
 
 export default class InstanceModels extends CompshareBaseCommand {
+  static aliases = ['ins:models']
   static description = '列出模型仓库中的模型'
   static examples = ['<%= config.bin %> <%= command.id %>']
 

@@ -9,6 +9,7 @@ import {UsageError} from '../../lib/compshare/errors.js'
 import {communityRows, imageSource} from '../../lib/compshare/image-helpers.js'
 
 export default class ImageShow extends CompshareBaseCommand {
+  static aliases = ['img:show', 'img:get']
   static description = '查看镜像详情'
 
   static examples = ['<%= config.bin %> <%= command.id %> <IMAGE_ID>']

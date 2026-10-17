@@ -15,6 +15,7 @@ function specKey(spec: Record<string, unknown>): string {
 }
 
 export default class InstanceSearch extends CompshareBaseCommand {
+  static aliases = ['ins:search']
   static description = '搜索合法规格, 可选查询真实库存'
   static examples = ['<%= config.bin %> <%= command.id %> --region cn-bj2 --zone cn-bj2-a --gpu 4090']
 

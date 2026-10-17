@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class ImageUnfavorite extends CompshareBaseCommand {
+  static aliases = ['img:unfavorite']
   static description = '取消收藏社区镜像组'
 
   static examples = ['<%= config.bin %> <%= command.id %> <GROUP_ID>']

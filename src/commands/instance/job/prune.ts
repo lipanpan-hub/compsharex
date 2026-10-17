@@ -10,6 +10,7 @@ import {pruneScript} from '../../../lib/compshare/remote-jobs.js'
 import {JOB_COLUMNS, remoteJobRecords} from '../../../lib/compshare/ssh-remote.js'
 
 export default class JobPrune extends CompshareBaseCommand {
+  static aliases = ['ins:job:prune']
   static description = '清理已结束的旧远程作业记录与日志'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --older-than 7d --dry-run']
 

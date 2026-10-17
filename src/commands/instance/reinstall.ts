@@ -7,6 +7,7 @@ import {invalidateSshCredential, lifecycle} from '../../lib/compshare/instance-h
 import {compact, encodePassword} from '../../lib/compshare/parsing.js'
 
 export default class InstanceReinstall extends CompshareBaseCommand {
+  static aliases = ['ins:reinstall']
   static description = '从镜像重装实例(系统盘数据将全部丢失)'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --image <IMAGE_ID>']
 

@@ -6,6 +6,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {lifecycle} from '../../lib/compshare/instance-helpers.js'
 
 export default class InstanceCharge extends CompshareBaseCommand {
+  static aliases = ['ins:charge']
   static description = '切换实例计费类型'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --to Month']
 

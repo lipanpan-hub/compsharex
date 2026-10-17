@@ -5,6 +5,7 @@ import {MiniMaxClient} from '../../lib/compshare/minimax-api.js'
 import {PACKAGE_COLUMNS} from '../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxPackages extends CompshareBaseCommand {
+  static aliases = ['mm:packages']
   static description = '列出 MiniMax H3 积分包'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

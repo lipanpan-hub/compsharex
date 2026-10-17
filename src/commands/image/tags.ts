@@ -5,6 +5,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class ImageTags extends CompshareBaseCommand {
+  static aliases = ['img:tags']
   static description = '列出可用镜像标签'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

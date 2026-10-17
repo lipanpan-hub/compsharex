@@ -9,6 +9,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {AUDIO_MIME, uploadAsset} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxAudioUpload extends CompshareBaseCommand {
+  static aliases = ['mm:audio:upload']
   static description = '上传并注册引用音频'
 
   static examples = ['<%= config.bin %> <%= command.id %> ref.wav --duration-ms 3000']

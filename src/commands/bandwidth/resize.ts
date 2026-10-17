@@ -9,6 +9,7 @@ import {confirmDetails} from '../../lib/compshare/confirm.js'
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class BandwidthResize extends CompshareBaseCommand {
+  static aliases = ['bw:resize']
   static description = '报价并调整独立带宽上限'
 
   static examples = ['<%= config.bin %> <%= command.id %> <BANDWIDTH_ID> --bandwidth 200 --region cn-bj2 --zone cn-bj2-02']

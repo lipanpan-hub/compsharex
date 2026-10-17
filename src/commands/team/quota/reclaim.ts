@@ -7,6 +7,7 @@ import {UsageError} from '../../../lib/compshare/errors.js'
 import {quota} from '../../../lib/compshare/team-helpers.js'
 
 export default class QuotaReclaim extends CompshareBaseCommand {
+  static aliases = ['tm:quota:reclaim']
   static description = '回收团队成员配额'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> <MEMBER_ID>... --amount 100']

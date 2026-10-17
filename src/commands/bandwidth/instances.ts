@@ -10,6 +10,7 @@ import {UsageError} from '../../lib/compshare/errors.js'
 import {compact} from '../../lib/compshare/parsing.js'
 
 export default class BandwidthInstances extends CompshareBaseCommand {
+  static aliases = ['bw:instances']
   static description = '列出实例 EIP 带宽分配情况'
 
   static examples = ['<%= config.bin %> <%= command.id %> --id <INSTANCE_ID>']

@@ -8,6 +8,7 @@ import {UsageError} from '../../lib/compshare/errors.js'
 import {teamParams} from '../../lib/compshare/team-helpers.js'
 
 export default class TeamUpdate extends CompshareBaseCommand {
+  static aliases = ['tm:update']
   static description = '更新团队名称或描述'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> --name 新名称']

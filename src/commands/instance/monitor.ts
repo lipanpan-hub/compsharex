@@ -9,6 +9,7 @@ import {locateInstances} from '../../lib/compshare/location.js'
 import {UsageError} from '../../lib/compshare/errors.js'
 
 export default class InstanceMonitor extends CompshareBaseCommand {
+  static aliases = ['ins:monitor']
   static description = '获取实例监控数据'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>...']
 

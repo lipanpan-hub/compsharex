@@ -8,6 +8,7 @@ import {validateJobId, waitScript} from '../../../lib/compshare/remote-jobs.js'
 import {remoteJobRecords, singleJobRecord} from '../../../lib/compshare/ssh-remote.js'
 
 export default class JobWait extends CompshareBaseCommand {
+  static aliases = ['ins:job:wait']
   static description = '等待持久远程作业结束(超时不取消作业)'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> <JOB_ID> --timeout 300']
 

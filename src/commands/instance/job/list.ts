@@ -8,6 +8,7 @@ import {JOB_STATES, listScript} from '../../../lib/compshare/remote-jobs.js'
 import {JOB_COLUMNS, remoteJobRecords} from '../../../lib/compshare/ssh-remote.js'
 
 export default class JobList extends CompshareBaseCommand {
+  static aliases = ['ins:job:list', 'ins:job:ls']
   static description = '列出实例上的持久远程作业'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --state Running']
 

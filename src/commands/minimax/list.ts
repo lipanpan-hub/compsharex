@@ -8,6 +8,7 @@ import {MINIMAX_MODELS, MINIMAX_STATUSES, VIDEO_TASK_COLUMNS} from '../../lib/co
 import {UsageError} from '../../lib/compshare/errors.js'
 
 export default class MinimaxList extends CompshareBaseCommand {
+  static aliases = ['mm:list', 'mm:ls']
   static description = '列出 MiniMax H3 视频任务'
 
   static examples = ['<%= config.bin %> <%= command.id %> --status running']

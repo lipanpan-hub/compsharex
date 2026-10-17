@@ -18,6 +18,7 @@ const DISK_COLUMNS = [
 ] as const satisfies readonly (readonly [string, string])[]
 
 export default class DiskList extends CompshareBaseCommand {
+  static aliases = ['st:disk:list', 'st:disk:ls']
   static description = '列出已挂载与未挂载的磁盘'
 
   static examples = ['<%= config.bin %> <%= command.id %> --instance <INSTANCE_ID>']

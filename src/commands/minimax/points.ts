@@ -4,6 +4,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {MiniMaxClient} from '../../lib/compshare/minimax-api.js'
 
 export default class MinimaxPoints extends CompshareBaseCommand {
+  static aliases = ['mm:points']
   static description = '查看 MiniMax H3 积分余额'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

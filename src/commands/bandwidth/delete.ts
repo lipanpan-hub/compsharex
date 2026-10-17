@@ -9,6 +9,7 @@ import {confirmDetails} from '../../lib/compshare/confirm.js'
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class BandwidthDelete extends CompshareBaseCommand {
+  static aliases = ['bw:delete', 'bw:rm']
   static description = '报价并删除独立带宽'
 
   static examples = ['<%= config.bin %> <%= command.id %> <BANDWIDTH_ID> --region cn-bj2 --zone cn-bj2-02']

@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {MEMBER_COLUMNS, memberRows, teamParams} from '../../lib/compshare/team-helpers.js'
 
 export default class TeamShow extends CompshareBaseCommand {
+  static aliases = ['tm:show', 'tm:get']
   static description = '查看团队详情与成员'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID>']

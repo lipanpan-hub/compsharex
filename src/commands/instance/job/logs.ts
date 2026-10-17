@@ -9,6 +9,7 @@ import {followScript, logsScript, validateJobId} from '../../../lib/compshare/re
 import {remoteJobRecords, remoteJobStream, singleJobRecord} from '../../../lib/compshare/ssh-remote.js'
 
 export default class JobLogs extends CompshareBaseCommand {
+  static aliases = ['ins:job:logs']
   static description = '读取或跟踪持久远程作业日志'
   static examples = [
     '<%= config.bin %> <%= command.id %> <INSTANCE_ID> <JOB_ID>',

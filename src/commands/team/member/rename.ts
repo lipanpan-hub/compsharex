@@ -6,6 +6,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../../lib/compshare
 import {relation} from '../../../lib/compshare/team-helpers.js'
 
 export default class MemberRename extends CompshareBaseCommand {
+  static aliases = ['tm:member:rename']
   static description = '修改团队成员备注名'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> <USER_ID> <REMARK>']

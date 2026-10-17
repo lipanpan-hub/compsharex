@@ -17,6 +17,7 @@ const PRICE_COLUMNS = [
 ] as const
 
 export default class InstancePrice extends CompshareBaseCommand {
+  static aliases = ['ins:price']
   static description = '查询新实例价格'
   static examples = ['<%= config.bin %> <%= command.id %> --gpu 4090 --cpu 16 --memory 64GiB --region cn-bj2 --zone cn-bj2-a']
 

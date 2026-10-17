@@ -7,6 +7,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class ImageProgress extends CompshareBaseCommand {
+  static aliases = ['img:progress']
   static description = '查询自定义镜像创建进度'
 
   static examples = ['<%= config.bin %> <%= command.id %> <IMAGE_ID> --region cn-sh2']

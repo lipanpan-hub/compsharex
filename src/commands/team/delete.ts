@@ -8,6 +8,7 @@ import {confirmDetails} from '../../lib/compshare/confirm.js'
 import {teamParams} from '../../lib/compshare/team-helpers.js'
 
 export default class TeamDelete extends CompshareBaseCommand {
+  static aliases = ['tm:delete', 'tm:rm']
   static description = '永久删除空团队'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID>']

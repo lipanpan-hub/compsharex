@@ -17,6 +17,7 @@ const JOINED_COLUMNS = [
 ] as const satisfies readonly (readonly [string, string])[]
 
 export default class TeamJoined extends CompshareBaseCommand {
+  static aliases = ['tm:joined']
   static description = '列出当前账号加入的团队'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

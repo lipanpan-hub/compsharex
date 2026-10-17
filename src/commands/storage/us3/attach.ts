@@ -8,6 +8,7 @@ import {CompshareContext} from '../../../lib/compshare/context.js'
 import {locateInstance} from '../../../lib/compshare/location.js'
 
 export default class Us3Attach extends CompshareBaseCommand {
+  static aliases = ['st:us3:attach']
   static description = '为实例挂载 US3 对象存储'
 
   static examples = ['<%= config.bin %> <%= command.id %> --instance <INSTANCE_ID>']

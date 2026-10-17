@@ -7,6 +7,7 @@ import {confirm} from '../../../lib/compshare/confirm.js'
 import {InstanceTemplateStore, templatePath} from '../../../lib/compshare/instance-template-store.js'
 
 export default class InstanceTemplateDelete extends CompshareBaseCommand {
+  static aliases = ['ins:template:delete', 'ins:template:rm']
   static description = '删除本地实例模板'
   static examples = ['<%= config.bin %> <%= command.id %> <NAME>']
 

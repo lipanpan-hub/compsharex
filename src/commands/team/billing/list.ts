@@ -8,6 +8,7 @@ import {compact, splitCsv} from '../../../lib/compshare/parsing.js'
 import {ORDER_COLUMNS, billingParams, orderSort} from '../../../lib/compshare/team-helpers.js'
 
 export default class BillingList extends CompshareBaseCommand {
+  static aliases = ['tm:billing:list', 'tm:billing:ls']
   static description = "列出团队成员订单"
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> <MEMBER_ID> --start 30d']

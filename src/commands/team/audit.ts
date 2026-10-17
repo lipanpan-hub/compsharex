@@ -16,6 +16,7 @@ const AUDIT_COLUMNS = [
 ] as const satisfies readonly (readonly [string, string])[]
 
 export default class TeamAudit extends CompshareBaseCommand {
+  static aliases = ['tm:audit']
   static description = '列出团队操作日志'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> --start 7d']

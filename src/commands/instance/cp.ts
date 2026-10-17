@@ -45,6 +45,7 @@ function isDirectory(path: string): boolean {
 }
 
 export default class InstanceCp extends CompshareBaseCommand {
+  static aliases = ['ins:cp']
   static description = '在本地与实例之间复制文件或目录'
   static examples = [
     '<%= config.bin %> <%= command.id %> <INSTANCE_ID> ./local.txt :/root/remote.txt',

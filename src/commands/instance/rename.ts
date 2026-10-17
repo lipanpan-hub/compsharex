@@ -8,6 +8,7 @@ import {CompshareContext} from '../../lib/compshare/context.js'
 import {locateInstance} from '../../lib/compshare/location.js'
 
 export default class InstanceRename extends CompshareBaseCommand {
+  static aliases = ['ins:rename']
   static description = '重命名实例'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> <NAME>']
 

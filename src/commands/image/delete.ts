@@ -8,6 +8,7 @@ import {CompshareContext} from '../../lib/compshare/context.js'
 import {confirm} from '../../lib/compshare/confirm.js'
 
 export default class ImageDelete extends CompshareBaseCommand {
+  static aliases = ['img:delete', 'img:rm']
   static description = '永久删除自定义镜像'
 
   static examples = ['<%= config.bin %> <%= command.id %> <IMAGE_ID> --region cn-sh2 --yes']

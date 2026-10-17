@@ -9,6 +9,7 @@ import {MINIMAX_MODELS, MINIMAX_RATIOS, MINIMAX_RESOLUTIONS, videoContent} from 
 import {UsageError} from '../../lib/compshare/errors.js'
 
 export default class MinimaxCreate extends CompshareBaseCommand {
+  static aliases = ['mm:create', 'mm:new']
   static description = '创建 MiniMax H3 视频任务'
 
   static examples = ['<%= config.bin %> <%= command.id %> "一只猫在草地上奔跑" --resolution 1080P']

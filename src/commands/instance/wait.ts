@@ -7,6 +7,7 @@ import {renderBatch, waitForInstance, type BatchItem} from '../../lib/compshare/
 import {locateInstances} from '../../lib/compshare/location.js'
 
 export default class InstanceWait extends CompshareBaseCommand {
+  static aliases = ['ins:wait']
   static description = '等待实例到达指定状态'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID>... --state Running']
 

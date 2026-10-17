@@ -10,6 +10,7 @@ import {UsageError} from '../../lib/compshare/errors.js'
 import {supportedLocations} from '../../lib/compshare/location.js'
 
 export default class BandwidthList extends CompshareBaseCommand {
+  static aliases = ['bw:list', 'bw:ls']
   static description = '列出独立带宽资源'
 
   static examples = ['<%= config.bin %> <%= command.id %> --region cn-bj2']

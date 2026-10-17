@@ -7,6 +7,7 @@ import {InstanceTemplateStore, templatePath} from '../../../lib/compshare/instan
 import {compact, diskGib, memoryMib, splitCsv} from '../../../lib/compshare/parsing.js'
 
 export default class InstanceTemplateCreate extends CompshareBaseCommand {
+  static aliases = ['ins:template:create', 'ins:template:new']
   static description = '创建本地实例模板'
   static examples = ['<%= config.bin %> <%= command.id %> my-template --gpu 4090 --count 1 --cpu 16 --memory 64GiB']
 

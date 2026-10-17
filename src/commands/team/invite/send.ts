@@ -9,6 +9,7 @@ import {UsageError} from '../../../lib/compshare/errors.js'
 import {invitee, teamParams} from '../../../lib/compshare/team-helpers.js'
 
 export default class InviteSend extends CompshareBaseCommand {
+  static aliases = ['tm:invite:send']
   static description = '邀请用户加入团队'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TEAM_ID> <USER_ID>[:REMARK]...']

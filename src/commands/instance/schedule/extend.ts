@@ -13,6 +13,7 @@ import {durationSeconds} from '../../../lib/compshare/parsing.js'
 import {UsageError} from '../../../lib/compshare/errors.js'
 
 export default class InstanceScheduleExtend extends CompshareBaseCommand {
+  static aliases = ['ins:schedule:extend']
   static description = '延长实例定时关机'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --by 2h']
 

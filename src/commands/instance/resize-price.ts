@@ -12,7 +12,7 @@ import {UsageError} from '../../lib/compshare/errors.js'
 export default class InstanceResizePrice extends CompshareBaseCommand {
   static description = '查询实例升级价格'
   static examples = ['<%= config.bin %> <%= command.id %> <INSTANCE_ID> --cpu 16 --memory 64GiB --gpu 1']
-  static aliases = ['instance:upgrade-price']
+  static aliases = ['instance:upgrade-price', 'ins:resize-price']
 
   static args = {
     instance: Args.string({required: true, description: '实例 ID'}),

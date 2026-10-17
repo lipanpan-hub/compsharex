@@ -6,6 +6,7 @@ import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/ba
 import {CompshareContext} from '../../lib/compshare/context.js'
 
 export default class TeamList extends CompshareBaseCommand {
+  static aliases = ['tm:list', 'tm:ls']
   static description = '列出当前账号创建的团队'
 
   static examples = ['<%= config.bin %> <%= command.id %>']

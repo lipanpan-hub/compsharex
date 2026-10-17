@@ -8,6 +8,7 @@ import {MiniMaxClient, newIdempotencyKey} from '../../../lib/compshare/minimax-a
 import {IMAGE_RATIOS, MINIMAX_IMAGE_PATH, submitTask} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxImageCreate extends CompshareBaseCommand {
+  static aliases = ['mm:image:create', 'mm:image:new']
   static description = '创建 Qwen-Image 图像任务'
 
   static examples = ['<%= config.bin %> <%= command.id %> "赛博朋克风格的城市夜景" --resolution 2K']

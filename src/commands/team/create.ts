@@ -8,6 +8,7 @@ import {confirmDetails} from '../../lib/compshare/confirm.js'
 import {teamParams} from '../../lib/compshare/team-helpers.js'
 
 export default class TeamCreate extends CompshareBaseCommand {
+  static aliases = ['tm:create', 'tm:new']
   static description = '创建团队'
 
   static examples = ['<%= config.bin %> <%= command.id %> <NAME> --description "描述"']

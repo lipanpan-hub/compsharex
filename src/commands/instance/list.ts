@@ -25,6 +25,7 @@ const LIST_JSON_FIELDS = [
 ] as const
 
 export default class InstanceList extends CompshareBaseCommand {
+  static aliases = ['ins:list', 'ins:ls']
   static description = '列出实例'
   static examples = ['<%= config.bin %> <%= command.id %>']
 
