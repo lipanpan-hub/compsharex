@@ -8,7 +8,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {taskPath} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxAudioVoiceDelete extends CompshareBaseCommand {
-  static aliases = ['mm:audio:voice-delete']
+  static aliases = ['mm:audio:voice-delete', 'ma:voice-delete', 'ma:vrm']
   static description = '删除自定义音色'
 
   static examples = ['<%= config.bin %> <%= command.id %> <VOICE_ID>']

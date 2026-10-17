@@ -7,7 +7,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {MINIMAX_AUDIO_PATH, mediaAction} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxAudioDelete extends CompshareBaseCommand {
-  static aliases = ['mm:audio:delete', 'mm:audio:rm']
+  static aliases = ['mm:audio:delete', 'mm:audio:rm', 'ma:delete', 'ma:rm']
   static description = '删除已完成的语音任务及其输出'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TASK_ID>']

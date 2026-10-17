@@ -25,7 +25,7 @@ const floatFlag = Flags.custom<number>({
 })
 
 export default class MinimaxAudioCreate extends CompshareBaseCommand {
-  static aliases = ['mm:audio:create', 'mm:audio:new']
+  static aliases = ['mm:audio:create', 'mm:audio:new', 'ma:create', 'ma:new', 'ma:tts']
   static description = '创建 IndexTTS 2.5 语音任务'
 
   static examples = ['<%= config.bin %> <%= command.id %> "你好, 欢迎" --voice-id <VOICE_ID>']

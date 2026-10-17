@@ -8,7 +8,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {VOICE_COLUMNS} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxAudioVoices extends CompshareBaseCommand {
-  static aliases = ['mm:audio:voices']
+  static aliases = ['mm:audio:voices', 'ma:voices', 'ma:vls']
   static description = '列出预置或自定义音色'
 
   static examples = ['<%= config.bin %> <%= command.id %> --kind custom']

@@ -7,7 +7,7 @@ import {MiniMaxClient} from '../../../lib/compshare/minimax-api.js'
 import {MINIMAX_AUDIO_PATH, taskPath} from '../../../lib/compshare/minimax-helpers.js'
 
 export default class MinimaxAudioShow extends CompshareBaseCommand {
-  static aliases = ['mm:audio:show', 'mm:audio:get']
+  static aliases = ['mm:audio:show', 'mm:audio:get', 'ma:show', 'ma:get']
   static description = '查看语音任务'
 
   static examples = ['<%= config.bin %> <%= command.id %> <TASK_ID>']

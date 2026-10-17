@@ -8,7 +8,7 @@ import {UsageError} from '../../../lib/compshare/errors.js'
 import {MiniMaxClient, newIdempotencyKey} from '../../../lib/compshare/minimax-api.js'
 
 export default class MinimaxAudioVoiceCreate extends CompshareBaseCommand {
-  static aliases = ['mm:audio:voice-create']
+  static aliases = ['mm:audio:voice-create', 'ma:voice-create', 'ma:vc']
   static description = '将引用资产保存为自定义音色'
 
   static examples = ['<%= config.bin %> <%= command.id %> <ASSET_ID> <NAME>']
