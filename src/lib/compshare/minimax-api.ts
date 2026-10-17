@@ -20,6 +20,8 @@ export class MiniMaxClient {
   constructor(
     private readonly renderer: Renderer,
     private readonly cliVersion: string,
+    // 配置档案中的 API Key(环境变量缺省时的回退来源)
+    private readonly configApiKey?: string,
   ) {}
 
   // 分类错误输出并以指定退出码终止
@@ -28,19 +30,21 @@ export class MiniMaxClient {
     throw new SilentExit(exitCode)
   }
 
-  // 读取并校验 API Key 环境变量
+  // 读取并校验 API Key(环境变量优先, 其次配置档案)
   apiKey(): string {
-    const key = (process.env[MINIMAX_API_KEY_ENV] ?? '').trim()
+    const envKey = (process.env[MINIMAX_API_KEY_ENV] ?? '').trim()
+    const configKey = (this.configApiKey ?? '').trim()
+    const key = envKey || configKey
     if (!key) {
       this.fail(
         'configuration_error',
-        `请设置环境变量 ${MINIMAX_API_KEY_ENV} 为 MiniMax H3 API Key。`,
+        `请设置环境变量 ${MINIMAX_API_KEY_ENV} 或运行 cps minimax cfset 配置 MiniMax H3 API Key。`,
         undefined,
         2,
       )
     }
     if (!key.startsWith('sk-ml-')) {
-      this.fail('configuration_error', `${MINIMAX_API_KEY_ENV} 必须是 sk-ml- 开头的 API Key。`, undefined, 2)
+      this.fail('configuration_error', 'MiniMax H3 API Key 必须是 sk-ml- 开头。', undefined, 2)
     }
     return key
   }

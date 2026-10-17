@@ -24,7 +24,7 @@ export default class MinimaxList extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {flags} = await this.parse(MinimaxList)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const normalizedStatus = flags.status ? flags.status.toLowerCase() : undefined
     if (normalizedStatus && !MINIMAX_STATUSES.has(normalizedStatus)) {
       throw new UsageError(`不支持的任务状态: ${flags.status}。`)

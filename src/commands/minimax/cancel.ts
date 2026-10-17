@@ -25,7 +25,7 @@ export default class MinimaxCancel extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxCancel)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const current = await client.request('GET', taskPath('/minimax/v2/query/video_generation', args.taskId))
     const task = current.task !== null && typeof current.task === 'object' ? (current.task as Record<string, unknown>) : {}
     await confirmDetails(

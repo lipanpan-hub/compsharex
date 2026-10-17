@@ -13,7 +13,7 @@ export default class MinimaxAudioPricing extends CompshareBaseCommand {
 
   async run(): Promise<void> {
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const response = await client.request('GET', '/audio/v1/pricing')
     context.renderer.data(response)
   }

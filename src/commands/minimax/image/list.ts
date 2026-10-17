@@ -24,7 +24,7 @@ export default class MinimaxImageList extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {flags} = await this.parse(MinimaxImageList)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     if (!['latest', 'oldest'].includes(flags.sort)) {
       throw new UsageError('排序必须是 latest 或 oldest。')
     }

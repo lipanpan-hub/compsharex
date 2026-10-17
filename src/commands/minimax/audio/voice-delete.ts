@@ -25,7 +25,7 @@ export default class MinimaxAudioVoiceDelete extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxAudioVoiceDelete)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     await confirmDetails(
       context,
       '操作计划',

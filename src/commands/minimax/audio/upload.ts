@@ -27,7 +27,7 @@ export default class MinimaxAudioUpload extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxAudioUpload)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const fileName = args.file.split(/[\\/]/).pop() ?? args.file
     if (fileName.length > 255) {
       throw new UsageError('音频文件名不能超过 255 个字符。')

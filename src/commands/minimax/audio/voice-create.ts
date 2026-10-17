@@ -28,7 +28,7 @@ export default class MinimaxAudioVoiceCreate extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxAudioVoiceCreate)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     if (!(args.name.trim().length > 0 && args.name.trim().length <= 64)) {
       throw new UsageError('音色名称必须包含 1-64 个字符。')
     }

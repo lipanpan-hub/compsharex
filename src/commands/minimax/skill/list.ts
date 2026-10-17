@@ -22,7 +22,7 @@ export default class MinimaxSkillList extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {flags} = await this.parse(MinimaxSkillList)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const query: Record<string, unknown> = {page_num: flags.page, page_size: flags.pageSize}
     if (flags.keyword) {
       query.keyword = flags.keyword

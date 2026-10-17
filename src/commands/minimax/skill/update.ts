@@ -29,7 +29,7 @@ export default class MinimaxSkillUpdate extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxSkillUpdate)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const payload = skillPayload(args.name, args.content, flags.description ?? '')
     const fields: Array<[string, unknown]> = [
       ['NAME', payload.name],

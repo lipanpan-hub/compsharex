@@ -21,7 +21,7 @@ export default class MinimaxAudioShow extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args} = await this.parse(MinimaxAudioShow)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const response = await client.request('GET', taskPath(MINIMAX_AUDIO_PATH, args.taskId))
     const task = response.task !== null && typeof response.task === 'object' ? (response.task as Record<string, unknown>) : {}
     context.renderer.details(

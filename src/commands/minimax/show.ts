@@ -21,7 +21,7 @@ export default class MinimaxShow extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args} = await this.parse(MinimaxShow)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const response = await client.request('GET', taskPath('/minimax/v2/query/video_generation', args.taskId))
     const task = isRecord(response.task) ? response.task : {}
     const content = isRecord(task.content) ? task.content : {}

@@ -42,7 +42,7 @@ export default class MinimaxCreate extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxCreate)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     if (!MINIMAX_MODELS.has(flags.model)) {
       throw new UsageError(`不支持的视频模型: ${flags.model}。`)
     }

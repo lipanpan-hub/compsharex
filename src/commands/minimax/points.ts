@@ -13,7 +13,7 @@ export default class MinimaxPoints extends CompshareBaseCommand {
 
   async run(): Promise<void> {
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const response = await client.request('GET', '/minimax/v2/query/point_usage_summary')
     context.renderer.details(
       '积分余额',

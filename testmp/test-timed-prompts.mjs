@@ -89,7 +89,7 @@ testCase('非交互终端: timedSearch 抛 PromptTimeoutError', async () => {
 // #region 超时控制核心(abort 标记识别)
 
 // 模拟 inquirer 行为: 收到 abort 后以 AbortPromptError 风格抛出(reason 挂在 cause 上)
-function fakePromptAbortingOnSignal(abortSignal, delayMs) {
+function fakePromptAbortingOnSignal(abortSignal) {
   return new Promise((resolvePromise, rejectPromise) => {
     abortSignal.addEventListener('abort', () => rejectPromise(new Error('AbortPromptError', {cause: abortSignal.reason})))
   })
@@ -98,7 +98,7 @@ function fakePromptAbortingOnSignal(abortSignal, delayMs) {
 testCase('超时核心: 超时 abort 后命中回退值', async () => {
   setInteractiveTerminal(true)
   const startedAt = Date.now()
-  const result = await withPromptTimeout('问题', 80, (abortSignal) => fakePromptAbortingOnSignal(abortSignal, 80), () => '默认值')
+  const result = await withPromptTimeout('问题', 80, (abortSignal) => fakePromptAbortingOnSignal(abortSignal), () => '默认值')
   assert.equal(result, '默认值')
   assert.ok((Date.now() - startedAt) < 1000, '应在超时后立即回退而不是阻塞')
 })
@@ -110,7 +110,7 @@ testCase('超时核心: 无回退值时超时抛 PromptTimeoutError', async () =
       withPromptTimeout(
         '必填问题',
         80,
-        (abortSignal) => fakePromptAbortingOnSignal(abortSignal, 80),
+        (abortSignal) => fakePromptAbortingOnSignal(abortSignal),
         () => {
           throw new PromptTimeoutError('必填问题', 80)
         },

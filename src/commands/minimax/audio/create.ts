@@ -57,7 +57,7 @@ export default class MinimaxAudioCreate extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxAudioCreate)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     if (args.text.length > 2000 || !/[^\W_]/u.test(args.text)) {
       throw new UsageError('语音文本必须包含 1-2000 个字母或数字字符。')
     }

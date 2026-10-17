@@ -14,7 +14,7 @@ export default class MinimaxPackages extends CompshareBaseCommand {
 
   async run(): Promise<void> {
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const response = await client.request('GET', '/minimax/v2/query/point_packages')
     const rows = Array.isArray(response.items) ? (response.items as Array<Record<string, unknown>>) : []
     context.renderer.data(response, {rows, columns: PACKAGE_COLUMNS})

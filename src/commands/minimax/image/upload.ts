@@ -28,7 +28,7 @@ export default class MinimaxImageUpload extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxImageUpload)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const contentType = IMAGE_MIME[extname(args.file).toLowerCase()]
     if (!contentType) {
       throw new UsageError('图片文件必须是 JPG、PNG 或 WebP 格式。')

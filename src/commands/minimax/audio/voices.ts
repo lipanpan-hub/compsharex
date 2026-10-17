@@ -21,7 +21,7 @@ export default class MinimaxAudioVoices extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {flags} = await this.parse(MinimaxAudioVoices)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     if (!['custom', 'preset'].includes(flags.kind)) {
       throw new UsageError('音色类型必须是 preset 或 custom。')
     }

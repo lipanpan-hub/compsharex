@@ -22,7 +22,7 @@ export default class MinimaxAudioList extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {flags} = await this.parse(MinimaxAudioList)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const statuses = flags.status ?? []
     const query: Record<string, unknown> = {offset: flags.offset, limit: flags.limit}
     if (statuses.length > 0) {

@@ -24,7 +24,7 @@ export default class MinimaxAudioCancel extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxAudioCancel)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     await mediaAction(context, client, MINIMAX_AUDIO_PATH, args.taskId, 'cancel', flags.yes)
   }
 }

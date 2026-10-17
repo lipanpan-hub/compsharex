@@ -31,7 +31,7 @@ export default class MinimaxImageCreate extends CompshareBaseCommand {
   async run(): Promise<void> {
     const {args, flags} = await this.parse(MinimaxImageCreate)
     const context = this.compshareContext()
-    const client = new MiniMaxClient(context.renderer, this.config.version)
+    const client = new MiniMaxClient(context.renderer, this.config.version, context.profile.minimaxApiKey)
     const referenceAssets = flags.referenceAsset ?? []
     if (!args.prompt.trim() || args.prompt.length > 7000) {
       throw new UsageError('图像提示词必须包含 1-7000 个字符。')
