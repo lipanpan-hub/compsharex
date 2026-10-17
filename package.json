@@ -104,6 +104,14 @@
       },
       "minimax": {
         "description": "调用 MiniMax 视频、音频与图像服务"
+      },
+      "llm": {
+        "description": "调用优云智算 LLM 服务",
+        "subtopics": {
+          "indextts": {
+            "description": "IndexTTS 语音合成与自定义音色管理"
+          }
+        }
       }
     },
     "nsisCustomization": "nsis/nsis.nsi",
