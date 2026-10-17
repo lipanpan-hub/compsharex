@@ -15,7 +15,6 @@ import {
   MINIMAX_AUDIO_PATH,
   floatFlag,
   selectVoiceIdInteractively,
-  taskPath,
 } from '../../../lib/compshare/minimax-helpers.js'
 import {timedSelect} from '../../../lib/prompts.js'
 
@@ -23,6 +22,8 @@ import {timedSelect} from '../../../lib/prompts.js'
 // 轮询间隔与总时长上限(短文本生成快, 2s 轮询足够及时)
 const POLL_INTERVAL_MS = 2000
 const MAX_POLL_DURATION_MS = 15 * 60 * 1000
+// 列表接口单页大小(轮询用列表批量查询代替逐任务单查, 降低限流压力)
+const POLL_PAGE_SIZE = 100
 const DOWNLOAD_TIMEOUT_MS = 120_000
 // 到达即不再轮询的终态集合
 const TERMINAL_AUDIO_STATUSES = new Set(['cancelled', 'failed', 'succeeded'])
@@ -194,7 +195,7 @@ export default class MinimaxAudioVtt extends CompshareBaseCommand {
     assetId: Flags.string({description: '已注册的引用音频资产 ID'}),
     language: Flags.string({default: 'ZH', description: 'ZH/EN/JA/ES/AR'}),
     speed: floatFlag({default: 1, description: '语速 (0 或 0.5-2.0)'}),
-    concurrency: Flags.integer({default: 1, min: 1, max: 10, description: '提交/轮询/下载的并发数'}),
+    concurrency: Flags.integer({default: 1, min: 1, max: 10, description: '提交/下载的并发数(轮询已改为列表批量查询, 不受并发数影响)'}),
     dryRun: Flags.boolean({default: false, description: '只解析字幕并展示计划, 不提交任务'}),
     yes: Flags.boolean({char: 'y', default: false, description: '跳过确认'}),
   }
@@ -369,6 +370,7 @@ export default class MinimaxAudioVtt extends CompshareBaseCommand {
     // #endregion
 
     // #region 轮询任务直至全部到达终态
+    // 用列表接口批量拉取(每轮仅 1~数个请求)代替逐任务单查, 大幅降低限流压力
     const pendingResults = new Map<string, CueJobResult>()
     for (const result of jobResults) {
       if (result.taskId) {
@@ -379,55 +381,67 @@ export default class MinimaxAudioVtt extends CompshareBaseCommand {
     let settledCount = 0
     let consecutiveBrokenRounds = 0
     const pollDeadline = Date.now() + MAX_POLL_DURATION_MS
+    // 从任务记录结算一条本地结果(仅处理终态)
+    const settleTaskRecord = (taskId: string, task: Record<string, unknown>): void => {
+      const status = String(task.status ?? '')
+      if (!TERMINAL_AUDIO_STATUSES.has(status)) {
+        return
+      }
+      const result = pendingResults.get(taskId)
+      pendingResults.delete(taskId)
+      if (!result) {
+        return
+      }
+      settledCount += 1
+      if (status === 'succeeded') {
+        const outputUrl = typeof task.output_url === 'string' ? task.output_url : ''
+        const pointCost = Number(task.point_cost)
+        result.status = outputUrl ? 'succeeded' : 'failed'
+        result.outputUrl = outputUrl || undefined
+        result.pointCost = Number.isFinite(pointCost) ? pointCost : 0
+        if (!outputUrl) {
+          result.error = '任务成功但未返回音频地址'
+        }
+      } else {
+        result.status = 'failed'
+        result.error = String(task.error_message ?? `任务终态: ${status}`)
+      }
+    }
     while (pendingResults.size > 0) {
       if (Date.now() > pollDeadline) {
-        throw new UsageError('等待语音任务完成超时, 可稍后通过 minimax audio list/show 查询任务状态。')
+        throw new UsageError('等待语音任务完成超时, 可稍后通过 minimax audio list 查询任务状态。')
       }
       await sleep(POLL_INTERVAL_MS)
-      const snapshots = await Promise.all([...pendingResults.keys()].map(async (taskId) => {
+      // 逐页拉取列表并按 task_id 匹配, 本轮找齐全部 pending 即提前停止翻页
+      let pageOffset = 0
+      let hasMorePages = true
+      let brokenPageCount = 0
+      let okPageCount = 0
+      while (hasMorePages && pendingResults.size > 0) {
+        let response: Record<string, unknown>
         try {
-          const response = await client.request('GET', taskPath(MINIMAX_AUDIO_PATH, taskId))
-          const task = response.task !== null && typeof response.task === 'object' && !Array.isArray(response.task)
-            ? (response.task as Record<string, unknown>)
-            : {}
-          return {isQueryOk: true as const, taskId, task}
+          response = await client.request('GET', MINIMAX_AUDIO_PATH, {
+            query: {offset: pageOffset, limit: POLL_PAGE_SIZE},
+          })
+          okPageCount += 1
         } catch {
-          // 单次查询失败不中断整批, 下一轮重试
-          return {isQueryOk: false as const, taskId, task: null}
+          // 单页查询失败不中断整批, 下一轮重试
+          brokenPageCount += 1
+          break
         }
-      }))
-      let brokenQueryCount = 0
-      for (const snapshot of snapshots) {
-        if (!snapshot.isQueryOk) {
-          brokenQueryCount += 1
-          continue
-        }
-        const status = String(snapshot.task.status ?? '')
-        if (!TERMINAL_AUDIO_STATUSES.has(status)) {
-          continue
-        }
-        const result = pendingResults.get(snapshot.taskId)
-        pendingResults.delete(snapshot.taskId)
-        if (!result) {
-          continue
-        }
-        settledCount += 1
-        if (status === 'succeeded') {
-          const outputUrl = typeof snapshot.task.output_url === 'string' ? snapshot.task.output_url : ''
-          const pointCost = Number(snapshot.task.point_cost)
-          result.status = outputUrl ? 'succeeded' : 'failed'
-          result.outputUrl = outputUrl || undefined
-          result.pointCost = Number.isFinite(pointCost) ? pointCost : 0
-          if (!outputUrl) {
-            result.error = '任务成功但未返回音频地址'
+        const items = Array.isArray(response.items) ? (response.items as Array<Record<string, unknown>>) : []
+        for (const item of items) {
+          const taskId = String(item.task_id ?? '')
+          if (pendingResults.has(taskId)) {
+            settleTaskRecord(taskId, item)
           }
-        } else {
-          result.status = 'failed'
-          result.error = String(snapshot.task.error_message ?? `任务终态: ${status}`)
         }
+        pageOffset += items.length
+        // (items.length === 页大小) 才可能还有下一页, 防御 total 缺失的情况
+        hasMorePages = items.length === POLL_PAGE_SIZE
       }
-      // 整轮查询全部失败视为网络异常, 连续多轮后中止避免死循环
-      if (snapshots.length > 0 && brokenQueryCount === snapshots.length) {
+      // 整轮所有页请求均失败视为网络异常, 连续多轮后中止避免死循环
+      if (okPageCount === 0 && brokenPageCount > 0) {
         consecutiveBrokenRounds += 1
         if (consecutiveBrokenRounds >= 5) {
           throw new UsageError('查询任务状态连续失败, 请检查网络后重试。')
