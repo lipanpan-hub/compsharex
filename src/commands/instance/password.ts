@@ -2,17 +2,16 @@
 
 import {Args, Flags} from '@oclif/core'
 
-import {password as promptPassword} from '@inquirer/prompts'
-
 import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/base.js'
 import {invalidateSshCredential, lifecycle} from '../../lib/compshare/instance-helpers.js'
 import {encodePassword} from '../../lib/compshare/parsing.js'
+import {timedPassword} from '../../lib/prompts.js'
 
-// 提示输入新密码并要求二次确认
+// 提示输入新密码并要求二次确认; 密码为必填项且无默认值, 超时未输入则直接退出
 async function promptSecret(): Promise<string> {
   for (;;) {
-    const secret = await promptPassword({message: '新密码', mask: '*'})
-    const repeated = await promptPassword({message: '再次输入新密码', mask: '*'})
+    const secret = await timedPassword({message: '新密码', mask: '*'})
+    const repeated = await timedPassword({message: '再次输入新密码', mask: '*'})
     if (secret === repeated) {
       return secret
     }

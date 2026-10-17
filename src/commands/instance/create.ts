@@ -2,8 +2,6 @@
 
 import {Flags} from '@oclif/core'
 
-import {input as promptInput} from '@inquirer/prompts'
-
 import {call} from '../../lib/compshare/api.js'
 import {CompshareBaseCommand, compshareGlobalFlags} from '../../lib/compshare/base.js'
 import {confirmDetails} from '../../lib/compshare/confirm.js'
@@ -21,6 +19,7 @@ import {
   waitForInstance,
 } from '../../lib/compshare/instance-helpers.js'
 import {compact, memoryMib, money} from '../../lib/compshare/parsing.js'
+import {timedInput} from '../../lib/prompts.js'
 
 // 模板 store 延后实现, 先支持显式参数与交互向导
 // (计划中的 instance-template 任务将补回 --template)
@@ -110,8 +109,9 @@ export default class InstanceCreate extends CompshareBaseCommand {
     const resolvedImage = await createImage(context, resolvedRegion, selectedZone, image, imageSource)
     charge = isInteractive ? await createCharge(charge) : charge ?? 'Postpay'
     if (isInteractive) {
-      bootDisk = bootDisk ?? (await promptInput({message: '系统盘大小', default: '100GiB'}))
-      bootType = bootType ?? (await promptInput({message: '系统盘类型', default: 'CLOUD_SSD'}))
+      // 系统盘配置有默认值, 超时未输入时取默认值
+      bootDisk = bootDisk ?? (await timedInput({message: '系统盘大小', default: '100GiB'}))
+      bootType = bootType ?? (await timedInput({message: '系统盘类型', default: 'CLOUD_SSD'}))
     } else {
       bootDisk = bootDisk ?? '100GiB'
       bootType = bootType ?? 'CLOUD_SSD'

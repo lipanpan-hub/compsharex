@@ -3,10 +3,10 @@
 
 import {setTimeout as delay} from 'node:timers/promises'
 
-import {input as promptInput} from '@inquirer/prompts'
-
 import {CompshareContext} from './context.js'
 import type {ColumnTuple} from './output.js'
+
+import {timedInput} from '../prompts.js'
 
 import {call, callCaptured, collectPages} from './api.js'
 import {confirmDetails} from './confirm.js'
@@ -399,7 +399,8 @@ export async function choose<T>(
     return choices[0]
   }
   for (;;) {
-    const raw = await promptInput({message: '请选择', default: String(defaultIndex)})
+    // 序号选择有默认值, 超时未输入时选中默认项
+    const raw = await timedInput({message: '请选择', default: String(defaultIndex)})
     const selected = Number(raw)
     if (Number.isInteger(selected) && selected >= 1 && selected <= choices.length) {
       return choices[selected - 1]
@@ -436,7 +437,8 @@ export async function choosePaginated<T>(
     if (page + 1 < pageCount) {
       process.stdout.write('  f. 下一页\n')
     }
-    const raw = (await promptInput({message: '请选择', default: '1'})).trim().toLowerCase()
+    // 翻页选择有默认值, 超时未输入时选中当前页第 1 项
+    const raw = (await timedInput({message: '请选择', default: '1'})).trim().toLowerCase()
     if (raw === 'f' && page + 1 < pageCount) {
       page += 1
       continue
@@ -667,7 +669,8 @@ export async function createImage(
   }
   let images = await createImages(context, region, zone, source)
   if (images.length > 1) {
-    const query = (await promptInput({message: '按名称或 ID 过滤镜像(留空显示全部)', default: ''})).trim()
+    // 过滤词有默认值(空), 超时未输入时展示全部镜像
+    const query = (await timedInput({message: '按名称或 ID 过滤镜像(留空显示全部)', default: ''})).trim()
     if (query) {
       const normalized = query.toLowerCase()
       images = images.filter(

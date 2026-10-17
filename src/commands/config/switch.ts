@@ -1,9 +1,9 @@
-import * as inquirer from '@inquirer/prompts'
 import {Args} from '@oclif/core'
 import Fuse from 'fuse.js'
 
 import {BaseCommand} from '../../lib/base-command.js'
 import {ToolConfigManager} from '../../lib/config/index.js'
+import {timedSearch} from '../../lib/prompts.js'
 
 export default class ConfigSwitch extends BaseCommand {
   static aliases = ['cf:sw', 'cf:use']
@@ -45,10 +45,11 @@ export default class ConfigSwitch extends BaseCommand {
 
     // #region 交互选择: 模糊搜索过滤档案, 也可直接输入新名称创建档案
     // kind 区分用户意图: switch 切换到已有档案, create 新建同名档案并激活
+    // 档案名为必选项且无默认值, 超时未选择则直接退出
     type ChoiceValue = {kind: 'switch' | 'create'; name: string}
 
     const nameFuse = new Fuse(profileNames)
-    const selected = await inquirer.search({
+    const selected = await timedSearch({
       message: '输入或选择要切换到的配置档案 (支持模糊搜索):',
       source: (term = '') => {
         const keyword = term.trim()

@@ -1,7 +1,6 @@
-import * as inquirer from '@inquirer/prompts'
-
 import {BaseCommand} from '../../lib/base-command.js'
 import {ToolConfigManager} from '../../lib/config/index.js'
+import {timedInput, timedPassword} from '../../lib/prompts.js'
 
 export default class ConfigSet extends BaseCommand {
   static aliases = ['cf:set']
@@ -23,13 +22,15 @@ export default class ConfigSet extends BaseCommand {
     // #region 交互录入: accessKeyId 明文输入并预填旧值, accessKeySecret 掩码输入, 直接回车保留已有值
     this.log(`正在为配置档案 "${currentProfile.name}" 设置 compshare GPU 接口认证凭据`)
 
-    const accessKeyId = await inquirer.input({
+    // accessKeyId 超时保留旧值; accessKeySecret 超时视为回车(保留旧值), 二者均无旧值时由下方非空校验退出
+    const accessKeyId = await timedInput({
       message: '请输入 accessKeyId:',
       default: currentProfile.accessKeyId,
     })
 
-    const inputSecret = await inquirer.password({
+    const inputSecret = await timedPassword({
       message: '请输入 accessKeySecret (直接回车保留已有值):',
+      fallbackValue: '',
     })
     const accessKeySecret = inputSecret || currentProfile.accessKeySecret || ''
 

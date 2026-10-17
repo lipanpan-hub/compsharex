@@ -1,8 +1,8 @@
-import * as inquirer from '@inquirer/prompts'
 import {Flags} from '@oclif/core'
 import { BaseCommand } from '../../lib/base-command.js'
 
 import {ToolConfigManager, editConfigTui, ExternalEditor} from '../../lib/config/index.js'
+import {timedSelect} from '../../lib/prompts.js'
 
 export default class ConfigEdit extends BaseCommand {
   static aliases = ["cf:edit"]
@@ -39,7 +39,8 @@ export default class ConfigEdit extends BaseCommand {
       this.error('未检测到系统中可用的外部编辑器, 请改用内置编辑器 (去掉 --editor)')
     }
 
-    const selected = await inquirer.select({
+    // 编辑器为必选项且无默认值, 超时未选择则直接退出
+    const selected = await timedSelect({
       choices: available.map((candidate) => ({name: candidate.name, value: candidate})),
       message: '请选择用于编辑配置文件的编辑器:',
     })
