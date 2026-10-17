@@ -1,0 +1,29 @@
+*-debug.log
+*-error.log
+**/.DS_Store
+/.idea
+/dist
+/tmp
+/node_modules
+oclif.manifest.json
+
+.env
+
+yarn.lock
+pnpm-lock.yaml
+
+# TypeScript build cache
+*.tsbuildinfo
+
+
+
+.env.*
+!.env.example
+
+/.kiro/skills
+
+# # Drizzle migrations
+# .drizzle/
+
+# Tailwind 生成的 CSS 文件
+public/css/style.css

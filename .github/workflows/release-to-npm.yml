@@ -1,0 +1,45 @@
+# 工作流名称：发布到 NPM
+name: publish_to_npm
+
+# 触发条件：推送 v 开头的 tag 时发布（如 v1.0.2）
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch: # 允许手动触发工作流
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # 必需：用于 NPM Trusted Publishing 的 OIDC token
+    steps:
+      # 步骤1：检出代码仓库
+      - uses: actions/checkout@v4
+
+      # 步骤2：设置 Node.js 环境，使用最新的 LTS 版本
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          registry-url: 'https://registry.npmjs.org'
+
+      # 步骤3：安装项目依赖
+      - run: npm install
+
+      # 步骤4：构建项目（编译 TypeScript 代码）
+      - run: npm run build
+
+      # 步骤5：临时安装 CLI 到系统（使命令可用）
+      - run: npm link
+
+      # 步骤6：执行打包前的准备工作（生成 manifest 等）
+      - run: npm run prepack
+
+      # 步骤7：发布到 NPM 仓库（使用 Trusted Publishing，自动生成 provenance）
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # 步骤8：执行打包后的清理工作
+      - run: npm run postpack

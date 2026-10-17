@@ -1,0 +1,78 @@
+{
+    "files.eol": "\n",
+    "files.exclude": {
+        // "**/.git": true,
+        "**/.DS_Store": true,
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/*.pyo": true,
+        "**/*.pyd": true,
+        "**/.Python": true,
+        "**/build": true,
+        "**/develop-eggs": true,
+        // "**/downloads": true,
+        "**/eggs": true,
+        "**/.eggs": true,
+        // "**/lib": true,
+        "**/lib64": true,
+        "**/parts": true,
+        // "**/sdist": true,
+        "**/var": true,
+        "**/wheels": true,
+        "**/*.egg-info": true,
+        "**/.installed.cfg": true,
+        "**/*.egg": true,
+        // "**/.venv": true,
+        "**/venv": true,
+        "**/ENV": true,
+        // "**/env": true,
+        // "**/.env": true,
+        // "**/node_modules": true,
+        "**/.pytest_cache": true,
+        "**/.coverage": true,
+        "**/htmlcov": true,
+        "**/.tox": true,
+        "**/.mypy_cache": true
+    },
+    "search.exclude": {
+        "**/.venv": true,
+        "**/venv": true,
+        "**/node_modules": true,
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/build": true,
+        "**/dist": true,
+        "**/.git": true
+    },
+    "workbench.tree.indent": 15,
+    "editor.minimap.maxColumn": 40,
+    "git.followTagsWhenSync": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+    "editor.guides.bracketPairsHorizontal": "active",
+    "editor.guides.highlightActiveBracketPair": true,
+    
+    "workbench.colorCustomizations": {
+    // 括号对连接线颜色（非活跃状态，设为透明）
+    "editorBracketPairGuide.background1": "#00000000",
+    "editorBracketPairGuide.background2": "#00000000",
+    "editorBracketPairGuide.background3": "#00000000",
+
+    // 当前活跃括号对连接线的颜色（3层循环）
+    "editorBracketPairGuide.activeBackground1": "#ff0008", // 红色 - 第1、4、7层...
+    "editorBracketPairGuide.activeBackground2": "#fff000", // 黄色 - 第2、5、8层...
+    "editorBracketPairGuide.activeBackground3": "#44ff00"  // 绿色 - 第3、6、9层...
+    },
+    "workbench.editor.revealIfOpen": true,
+
+    // Mocha Test Explorer 配置
+    "mochaExplorer.files": "test/**/*.test.ts",
+    "mochaExplorer.require": "tsx",
+    "mochaExplorer.env": {
+        "NODE_ENV": "test"
+    },
+    "mochaExplorer.timeout": 60000,
+    "mochaExplorer.ui": "bdd",
+    "mochaExplorer.logpanel": true,
+    "foldOnOpen.targets": ["Level2"]
+}

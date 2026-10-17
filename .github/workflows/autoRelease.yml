@@ -1,0 +1,167 @@
+# 工作流名称：版本管理、标签创建和 GitHub Release 发布
+name: autoRelease
+
+# 触发条件：当代码推送到 main 分支时自动执行，或手动触发
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: # 允许手动触发工作流
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # 步骤1：检出代码仓库
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 获取完整的 git 历史记录，包括所有 tags
+      
+      # 步骤2：设置 Node.js 环境
+      - uses: actions/setup-node@v4
+      
+      # 步骤3：检查当前版本是否已存在
+      - name: Check if version already exists
+        id: version-check # 定义步骤 ID，用于后续步骤引用输出
+        run: |
+          # 从 package.json 读取当前版本号
+          package_version=$(node -p "require('./package.json').version")
+          # 通过 GitHub API 检查该版本的 release 是否已存在
+          exists=$(gh api repos/${{ github.repository }}/releases/tags/v$package_version >/dev/null 2>&1 && echo "true" || echo "")
+
+          if [ -n "$exists" ];
+          then
+            # 如果版本已存在，输出警告信息并跳过后续步骤
+            echo "Version v$package_version already exists"
+            echo "::warning file=package.json,line=1::Version v$package_version already exists - no release will be created. If you want to create a new release, please update the version in package.json and push again."
+            echo "skipped=true" >> $GITHUB_OUTPUT
+          else
+            # 如果版本不存在，准备创建新的 release
+            echo "Version v$package_version does not exist. Creating release..."
+            echo "skipped=false" >> $GITHUB_OUTPUT
+            echo "tag=v$package_version" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 使用 GitHub Token 进行 API 认证
+      
+      # 步骤4：配置 Git 用户信息（仅在版本不存在时执行）
+      - name: Setup git
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        run: |
+          git config --global user.email "lipanpanmail@163.com"
+          git config --global user.name "lipanpan"
+      
+      # 步骤5：生成 oclif README 文档（仅在版本不存在时执行）
+      - name: Generate oclif README
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        id: oclif-readme
+        run: |
+          # 安装依赖
+          npm install
+          # 执行 oclif readme 命令自动生成/更新 README.md
+          npm exec oclif readme
+          # 检查是否有文件变更
+          if [ -n "$(git status --porcelain)" ]; then
+            # 如果 README.md 有更新，提交并推送到远程仓库
+            git add .
+            git commit -am "chore: update README.md"
+            git push -u origin ${{ github.ref_name }}
+          fi
+      
+      # 步骤6：构建项目（仅在版本不存在时执行）
+      - name: Build project
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        run: npm run build
+      
+      # 步骤7：清理临时文件和缓存
+      - name: Clean temporary files
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        run: |
+          rm -rf tmp
+          npm cache clean --force
+      
+      # # 步骤8：打包 tarballs(源码包)
+      # - name: Pack tarballs
+      #   if: ${{ steps.version-check.outputs.skipped == 'false' }}
+      #   run: npm run pack:tarballs
+      
+      # 步骤9：安装 Windows 打包依赖
+      - name: Install Windows packaging dependencies
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        run: sudo apt-get update && sudo apt-get install -y p7zip-full zlib1g-dev libc6-dev build-essential gcc-mingw-w64-i686 g++-mingw-w64-i686 libz-mingw-w64-dev
+
+      # 步骤10：下载并编译 NSIS
+      - name: Download and build NSIS from source
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        run: |
+          # 安装 SCons 构建工具
+          sudo apt-get install -y scons
+          # 下载 NSIS 源码包
+          wget -O nsis-3.11-src.tar.bz2 https://sourceforge.net/projects/nsis/files/NSIS%203/3.11/nsis-3.11-src.tar.bz2/download
+          # 解压源码包
+          tar -xjf nsis-3.11-src.tar.bz2
+          cd nsis-3.11-src
+          # 编译 NSIS 编译器
+          sudo scons NSIS_MAX_STRLEN=8192 PREFIX=/usr/local ZLIB_W32=/usr/i686-w64-mingw32 install-compiler
+          # 安装 NSIS
+          sudo scons NSIS_MAX_STRLEN=8192 PREFIX=/usr/local ZLIB_W32=/usr/i686-w64-mingw32 install
+          cd ..
+          # 验证安装
+          makensis -VERSION
+
+      # 步骤11：打包 Windows 安装包
+      - name: Pack Windows installers
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        run: npm run pack:win
+      
+      # 步骤12：打包 Debian 安装包
+      - name: Pack Debian packages
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        run: npm run pack:deb
+      
+      # 步骤12：生成 Release Notes（从上一个 release 到当前的所有 commit message）
+      - name: Generate Release Notes
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        id: release-notes
+        run: |
+          # 通过 GitHub API 获取最新的 release
+          latest_release=$(gh api repos/${{ github.repository }}/releases/latest 2>/dev/null || echo "")
+          
+          if [ -z "$latest_release" ]; then
+            # 如果没有任何 release，获取所有 commit
+            commit_message=$(git log --pretty=format:"- %s%n%b" --reverse)
+          else
+            # 从 API 响应中提取 tag_name
+            latest_tag=$(echo "$latest_release" | jq -r '.tag_name')
+            echo "Latest release tag: $latest_tag"
+            
+            # 验证 tag 是否存在
+            if git rev-parse "$latest_tag" >/dev/null 2>&1; then
+              # 获取从上一个 release tag 到当前的所有 commit（排除自动生成的 README 更新）
+              commit_message=$(git log ${latest_tag}..HEAD --pretty=format:"- %s%n%b" | grep -v "^- chore: update README.md$" || echo "")
+            else
+              echo "Warning: Tag $latest_tag not found in local repository, fetching all commits"
+              commit_message=$(git log --pretty=format:"- %s%n%b" --reverse)
+            fi
+          fi
+          
+          # 将 commit message 保存到输出变量（处理多行文本）
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$commit_message" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      # 步骤13：创建 GitHub Release 并上传所有安装包（仅在版本不存在时执行）
+      - name: Create Github Release
+        uses: ncipollo/release-action@2c591bcc8ecdcd2db72b97d6147f871fcd833ba5
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        with:
+          name: ${{ steps.version-check.outputs.tag }} # Release 名称
+          tag: ${{ steps.version-check.outputs.tag }} # Git 标签名称
+          commit: ${{ github.ref_name }} # 关联的提交分支
+          token: ${{ secrets.GITHUB_TOKEN }} # GitHub Token
+          skipIfReleaseExists: true # 如果 Release 已存在则跳过
+          artifacts: "dist/*.tar.gz,dist/*.tar.xz,dist/win32*/*.exe,dist/deb/*.deb" # 上传所有打包文件
+          body: ${{ steps.release-notes.outputs.notes }} # 使用 commit message 作为 release notes
