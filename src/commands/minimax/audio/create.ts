@@ -12,6 +12,7 @@ import {
   pronunciationRules,
   submitTask,
 } from '../../../lib/compshare/minimax-helpers.js'
+import {timedSelect} from '../../../lib/prompts.js'
 
 // oclif 内置数值 flag 仅支持整数, 这里定义浮点数解析
 const floatFlag = Flags.custom<number>({
@@ -37,7 +38,7 @@ export default class MinimaxAudioCreate extends CompshareBaseCommand {
   static flags = {
     ...compshareGlobalFlags,
     voiceSource: Flags.string({default: 'preset', description: 'preset、custom 或 asset'}),
-    voiceId: Flags.string({description: '预置或自定义音色 ID'}),
+    voiceId: Flags.string({description: '预置或自定义音色 ID, 省略时从音色列表交互选择'}),
     assetId: Flags.string({description: '已注册的引用音频资产 ID'}),
     language: Flags.string({default: 'ZH', description: 'ZH/EN/JA/ES/AR'}),
     speed: floatFlag({default: 1, description: '语速 (0 或 0.5-2.0)'}),
@@ -83,10 +84,12 @@ export default class MinimaxAudioCreate extends CompshareBaseCommand {
       }
       voice = {source: 'asset', asset_id: flags.assetId}
     } else {
-      if (!flags.voiceId || flags.assetId) {
-        throw new UsageError('preset 或 custom 音色来源需要提供 --voice-id 且不能提供 --asset-id。')
+      if (flags.assetId) {
+        throw new UsageError('preset 或 custom 音色来源不能提供 --asset-id。')
       }
-      voice = {source: flags.voiceSource, voice_id: flags.voiceId}
+      // 未显式提供 --voice-id 时, 拉取同类型音色列表交互式单选
+      const voiceId = flags.voiceId ?? (await this.selectVoiceId(client, flags.voiceSource))
+      voice = {source: flags.voiceSource, voice_id: voiceId}
     }
     if (flags.saveVoice && (flags.voiceSource !== 'asset' || !flags.voiceName || !(flags.voiceName.trim().length > 0 && flags.voiceName.trim().length <= 64))) {
       throw new UsageError('--save-voice 需要 asset 音色来源和 1-64 字符的名称。')
@@ -148,4 +151,21 @@ export default class MinimaxAudioCreate extends CompshareBaseCommand {
       ],
     )
   }
+
+  // #region 音色交互选择: 未提供 --voice-id 时的回退, 从 voices 接口拉取同类型音色单选
+  private async selectVoiceId(client: MiniMaxClient, kind: string): Promise<string> {
+    const response = await client.request('GET', '/audio/v1/voices', {query: {kind}})
+    const voiceItems = Array.isArray(response.items) ? (response.items as Array<Record<string, unknown>>) : []
+    if (voiceItems.length === 0) {
+      throw new UsageError(`没有可用的 ${kind} 音色, 请改用 --voice-id 显式指定。`)
+    }
+    return timedSelect({
+      message: `选择 ${kind} 音色:`,
+      choices: voiceItems.map((item) => ({
+        name: [item.voice_id, item.name, item.language].filter(Boolean).join(' | '),
+        value: String(item.voice_id),
+      })),
+    })
+  }
+  // #endregion
 }
