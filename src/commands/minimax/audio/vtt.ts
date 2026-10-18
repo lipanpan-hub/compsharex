@@ -195,7 +195,7 @@ export default class MinimaxAudioVtt extends CompshareBaseCommand {
     assetId: Flags.string({description: '已注册的引用音频资产 ID'}),
     language: Flags.string({default: 'ZH', description: 'ZH/EN/JA/ES/AR'}),
     speed: floatFlag({default: 1, description: '语速 (0 或 0.5-2.0)'}),
-    concurrency: Flags.integer({default: 1, min: 1, max: 10, description: '提交/下载的并发数(轮询已改为列表批量查询, 不受并发数影响)'}),
+    concurrency: Flags.integer({default: 4, min: 1, max: 10, description: '提交/下载的并发数(轮询已改为列表批量查询, 不受并发数影响)'}),
     dryRun: Flags.boolean({default: false, description: '只解析字幕并展示计划, 不提交任务'}),
     yes: Flags.boolean({char: 'y', default: false, description: '跳过确认'}),
   }
