@@ -121,7 +121,7 @@
   },
   "repository": "lipanpan-hub/compsharex",
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
+    "build": "shx rm -rf dist tsconfig.tsbuildinfo oclif.manifest.json && tsc -b && oclif manifest",
     "lint": "eslint",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "npm run lint",
