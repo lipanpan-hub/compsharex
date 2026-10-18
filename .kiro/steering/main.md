@@ -4,7 +4,7 @@ inclusion: always
 
 ## 项目概述
 
-这是一个基于 **OCLIF v4** 框架构建的 CLI 工具。项目使用 TypeScript（ESM 模块），编译输出到 `dist/`，通过 `bin/run.js` 作为可执行入口。
+这是一个基于 **OCLIF** 框架构建的 CLI 工具。项目使用 TypeScript（ESM 模块），编译输出到 `dist/`，通过 `bin/run.js` 作为可执行入口。
 
 
 ## 目录结构
