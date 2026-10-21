@@ -1,7 +1,5 @@
 // 操作确认交互(移植自 compshare_cli/commands/common.py 的 confirm/confirm_details)
 
-import {confirm as promptConfirm} from '@inquirer/prompts'
-
 import type {CompshareContext} from './context.js'
 import {UsageError} from './errors.js'
 import {Renderer} from './output.js'
@@ -14,6 +12,8 @@ export async function confirm(context: CompshareContext, message: string, yes: b
   if (context.jsonOutput) {
     throw new UsageError('JSON 模式无法进行交互确认, 请传入 --yes 确认操作。')
   }
+  // @inquirer/prompts 加载约 180ms, 仅真正需要交互时才加载(传 --yes 的路径零开销)
+  const {confirm: promptConfirm} = await import('@inquirer/prompts')
   const answer = await promptConfirm({
     message: `${message}`,
     default: false,

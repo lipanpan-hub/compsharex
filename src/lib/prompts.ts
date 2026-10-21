@@ -1,7 +1,10 @@
 // 带超时的交互式询问工具(装饰器模式): 在不改变 @inquirer/prompts 调用接口的前提下附加超时控制。
 // 超时策略按参数性质决定: 配置了 default 的询问超时后取默认值, 未配置 default 的必填项超时后直接报错退出。
 
-import {input, password, select, search} from '@inquirer/prompts'
+// 仅类型导入(编译后擦除), 运行时由 loadInquirer 在真正询问时才动态加载(@inquirer/prompts 约 180ms)
+import type {input, password, select, search} from '@inquirer/prompts'
+
+const loadInquirer = () => import('@inquirer/prompts')
 
 // #region 常量与错误
 
@@ -88,7 +91,7 @@ export async function timedInput(
   return withPromptTimeout(
     promptMessage,
     timeoutMs,
-    (abortSignal) => input(inputConfig, promptContext(abortSignal)),
+    async (abortSignal) => (await loadInquirer()).input(inputConfig, promptContext(abortSignal)),
     createTimeoutFallback(promptMessage, timeoutMs ?? DEFAULT_PROMPT_TIMEOUT_MS, inputConfig.default),
   )
 }
@@ -102,7 +105,7 @@ export async function timedPassword(
   return withPromptTimeout(
     promptMessage,
     timeoutMs,
-    (abortSignal) => password(passwordConfig, promptContext(abortSignal)),
+    async (abortSignal) => (await loadInquirer()).password(passwordConfig, promptContext(abortSignal)),
     createTimeoutFallback(promptMessage, timeoutMs ?? DEFAULT_PROMPT_TIMEOUT_MS, fallbackValue),
   )
 }
@@ -116,7 +119,7 @@ export async function timedSelect<Value>(
   return withPromptTimeout(
     promptMessage,
     timeoutMs,
-    (abortSignal) => select<Value>(selectConfig, promptContext(abortSignal)),
+    async (abortSignal) => (await loadInquirer()).select<Value>(selectConfig, promptContext(abortSignal)),
     createTimeoutFallback(promptMessage, timeoutMs ?? DEFAULT_PROMPT_TIMEOUT_MS, selectConfig.default),
   )
 }
@@ -130,7 +133,7 @@ export async function timedSearch<Value>(
   return withPromptTimeout(
     promptMessage,
     timeoutMs,
-    (abortSignal) => search<Value>(searchConfig, promptContext(abortSignal)),
+    async (abortSignal) => (await loadInquirer()).search<Value>(searchConfig, promptContext(abortSignal)),
     createTimeoutFallback(promptMessage, timeoutMs ?? DEFAULT_PROMPT_TIMEOUT_MS),
   )
 }

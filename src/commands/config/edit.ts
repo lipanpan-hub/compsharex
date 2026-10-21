@@ -1,7 +1,7 @@
 import {Flags} from '@oclif/core'
 import { BaseCommand } from '../../lib/base-command.js'
 
-import {ToolConfigManager, editConfigTui, ExternalEditor} from '../../lib/config/index.js'
+import {ToolConfigManager, ExternalEditor} from '../../lib/config/index.js'
 import {timedSelect} from '../../lib/prompts.js'
 
 export default class ConfigEdit extends BaseCommand {
@@ -27,6 +27,8 @@ export default class ConfigEdit extends BaseCommand {
 
     // 未指定 --editor 时使用内置 TUI 编辑器
     if (!flags.editor) {
+      // 按需加载 TUI 依赖(pi-tui 较重), 仅内置编辑器路径付费
+      const {editConfigTui} = await import('../../lib/config/edit-config-tui.js')
       await editConfigTui(configPath)
       return
     }
