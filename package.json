@@ -1,7 +1,7 @@
 {
   "name": "@lppx/compsharex",
   "description": "A multi-command developer CLI tool",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "lppx",
   "bin": {
     "cps": "./bin/run.js"
